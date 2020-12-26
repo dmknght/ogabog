@@ -114,7 +114,8 @@ def program_handler(modules, args):
                 except AttributeError:
                     print("Invalid class name " + class_name + " for module " + module_name)
                 # Parse args from cli, pass into module's args check
-                module_args = module.get_opts().parse_args(un_args)
-                module.show_shell(module_args)
+                module.args = module.get_opts().parse_args(un_args)
+                module.run()
+
             except ModuleNotFoundError:
                 print("Invalid module name " + module_name)

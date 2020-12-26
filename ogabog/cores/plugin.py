@@ -6,6 +6,7 @@ class Module(object):
         self.opts = argparse.ArgumentParser()
         self.core_module = self.opts.add_argument_group("Framework arguments")
         self.group_module = self.opts.add_argument_group("Module arguments")
+        self.args = None
         self.shell = ""
 
     def add_args(self, *args, **kwargs):
@@ -48,10 +49,14 @@ class Module(object):
             required=True
         )
         self.opts.print_help()
-    #
-    # def show_shell(self):
-    #     """
-    #     Dummy method to show payload
-    #     :return:
-    #     """
-    #     print(self.shell)
+
+    def make_shell(self):
+        pass
+
+    def run(self):
+        """
+        Dummy method to show payload
+        :return:
+        """
+        self.make_shell()
+        print(self.shell)

