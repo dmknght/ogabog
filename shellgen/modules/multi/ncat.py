@@ -5,6 +5,15 @@ class ReverseShell(plugin.Module):
     def __init__(self):
         super().__init__()
         self.add_args(
+            "--type",
+            default="ncat",
+            choices=[
+                'nc',
+                'ncat'
+            ],
+            help="Select netcat type: tradition, ncat (default: ncat)"
+        )
+        self.add_args(
             "--ip",
             help="IP address"
         )
@@ -39,6 +48,15 @@ class ReverseShellUDP(plugin.Module):
 class BindShell(plugin.Module):
     def __init__(self):
         super().__init__()
+        self.add_args(
+            "--type",
+            default="ncat",
+            choices=[
+                'nc',
+                'ncat'
+            ],
+            help="Select netcat type: tradition, ncat (default: ncat)"
+        )
         self.add_args(
             "--port",
             help="Port address"
