@@ -56,7 +56,8 @@ def list_classes(module_name: str):
         module = importlib.import_module("modules." + module_name.replace("/", "."))
         for key, obj in module.__dict__.items():
             if isinstance(obj, type):
-                yield key
+                desc = getattr(module, key)().get_opts().description
+                yield key, desc
         del module
     except ModuleNotFoundError:
         print("Can't import module " + module_name)
@@ -65,5 +66,5 @@ def list_classes(module_name: str):
 def list_modules(modules: list):
     for module in modules:
         print(module.replace(".", "/"))
-        for class_name in list_classes(module):
-            print("  " + class_name)
+        for class_name, desc in list_classes(module):
+            print("  " + class_name + (20 - len(class_name)) * " " + desc)
