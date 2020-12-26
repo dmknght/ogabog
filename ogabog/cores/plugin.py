@@ -60,3 +60,29 @@ class Module(object):
         """
         self.make_shell()
         print(self.shell)
+
+
+class ReverseShell(Module):
+    def __init__(self):
+        super().__init__()
+        self.add_args(
+            "--ip",
+            help="IP address",
+            required=True
+        )
+        self.add_args(
+            "--port",
+            help="Port address",
+            required=True
+        )
+
+
+class BindShell(Module):
+    def __init__(self):
+        super().__init__()
+        self.add_args(
+            "--port",
+            help="Port address",
+            required=True
+        )
+        self.opts.description = "[BindShell][TCP] Netcat from swisskyrepo/PayloadsAllTheThings. License MIT."

