@@ -42,6 +42,8 @@ def index_modules(directory: str) -> list:
     """
     modules = []
     for root, dirs, files in os.walk(directory):
+        # FIXME MODULE_DIR now is different based on framework we use from core module
+        # We find a dynamic method to make it not be hardcoded
         _, package, root = root.rpartition(MODULE_DIR.replace("/", os.sep))
         root = root.replace(os.sep, ".")
         files = filter(lambda x: not x.startswith("__") and x.endswith(".py"), files)
