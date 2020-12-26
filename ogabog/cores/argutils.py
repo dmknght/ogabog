@@ -18,7 +18,7 @@ class ArgumentParser(argparse.ArgumentParser):
         """
         Custom help module for argparse
         If module is not defined, we print only help
-        If module is defined, we print hepl for module
+        If module is defined, we print help for module
         :param file:
         :return:
         """
@@ -34,7 +34,7 @@ class ArgumentParser(argparse.ArgumentParser):
                 # https://stackoverflow.com/a/21563930
                 import importlib
                 module = importlib.import_module("modules." + module_name.replace("/", "."))
-                print("Module " + module_name)
+                print("Module " + module_name)  # TODO better msg for print module name and classes
                 for key, obj in module.__dict__.items():
                     if isinstance(obj, type):
                         print("\n" + key)
