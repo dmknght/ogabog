@@ -2,6 +2,7 @@ import argparse
 import sys
 
 DEF_FLAG_MODULE = "-p"
+DEF_FLAG_CLASS = "-c"
 
 
 class ArgumentParser(argparse.ArgumentParser):
@@ -28,6 +29,22 @@ class ArgumentParser(argparse.ArgumentParser):
             module_name = sys.argv[pos + 1]
             # Ignore if argv starts with "-". Module name shouldn't have it
             if not module_name.startswith("-"):
+                # If user defines class name, try to print only class name then quit
+                try:
+                    pos = sys.argv.index(DEF_FLAG_CLASS)
+                    class_name = sys.argv[pos + 1]
+                    import importlib
+                    module = importlib.import_module("modules." + module_name.replace("/", "."))
+                    try:
+                        module = getattr(module, class_name)()
+                        print("Module " + module_name)  # TODO better msg for print module name and classes
+                        module.show_help(module_name, class_name)
+                        return
+                    except AttributeError:
+                        pass
+                except ValueError:
+                    pass
+
                 # https://stackoverflow.com/a/22578562
                 # Old method with inspect to get class names and print help
                 # New method to get all names of classes in module
@@ -71,7 +88,7 @@ def core_args():
         help="Select module"
     )
     group_core.add_argument(
-        "-c",
+        DEF_FLAG_CLASS,
         metavar='Class',
         help="Class of module"
     )
