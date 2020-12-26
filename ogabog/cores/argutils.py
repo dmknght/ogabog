@@ -29,9 +29,6 @@ class ArgumentParser(argparse.ArgumentParser):
                 for key, obj in module.__dict__.items():
                     if isinstance(obj, type):
                         print("\n" + key)
-                        # TODO overwrite the usage help
-                        # Help by now `usage: main.py [-h] [--ip IP] [--Port PORT]`
-                        # Expected help: `usage: main.py -p <module_name> -c <classname> [-h] [--ip IP] [--Port PORT]`
                         obj().show_help(module_name, key)
 
             else:
