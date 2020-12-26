@@ -10,9 +10,17 @@ if args.l:
     controller.list_modules(modules)
 else:
     module_name = args.p
-    if module_name:
-        import importlib
-
-        module = importlib.import_module("modules." + module_name.replace("/", "."))
-        # sub_args = module.get_opts().parse_args(un_args)
-        # print(sub_args)
+    class_name = args.c
+    if module_name and class_name:
+        try:
+            import importlib
+            module = importlib.import_module("modules." + module_name.replace("/", "."))
+            # https://stackoverflow.com/a/41678146
+            # Import class with importlib
+            module = getattr(module, class_name)()
+            # Parse args from cli, pass into module's args check
+            module_args = module.get_opts().parse_args(un_args)
+        except ModuleNotFoundError:
+            print("Invalid module name " + module_name)
+        except AttributeError:
+            print("Invalid class name " + class_name + " for module " + module_name)

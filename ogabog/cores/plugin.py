@@ -10,6 +10,9 @@ class Module(object):
     def add_args(self, *args, **kwargs):
         self.group_module.add_argument(*args, **kwargs)
 
+    def get_opts(self):
+        return self.opts
+
     def show_help(self, module_name, class_name):
         self.core_module.add_argument(
             "-p",
