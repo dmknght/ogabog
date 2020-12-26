@@ -1,4 +1,4 @@
-LINUX_SHELL = [
+LINUX_SHELL: list = [
     'bash',
     'dash',
     'sh',
