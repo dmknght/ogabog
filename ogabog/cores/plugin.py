@@ -6,6 +6,7 @@ class Module(object):
         self.opts = argparse.ArgumentParser()
         self.core_module = self.opts.add_argument_group("Framework arguments")
         self.group_module = self.opts.add_argument_group("Module arguments")
+        self.shell = ""
 
     def add_args(self, *args, **kwargs):
         self.group_module.add_argument(*args, **kwargs)
@@ -29,3 +30,6 @@ class Module(object):
             required=True
         )
         self.opts.print_help()
+
+    def show_shell(self):
+        print(self.shell)
