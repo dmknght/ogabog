@@ -1,8 +1,9 @@
 # Control modules
 import os
-# import importlib
 
-MODULE_DIR = "framework/modules/"
+# This string is the place of cutting the module name and project location
+# All modules should be at folder "/module/" or bug happens
+MODULE_DIR = "/modules/"
 
 
 def index_modules(directory: str) -> list:
@@ -42,8 +43,6 @@ def index_modules(directory: str) -> list:
     """
     modules = []
     for root, dirs, files in os.walk(directory):
-        # FIXME MODULE_DIR now is different based on framework we use from core module
-        # We find a dynamic method to make it not be hardcoded
         _, package, root = root.rpartition(MODULE_DIR.replace("/", os.sep))
         root = root.replace(os.sep, ".")
         files = filter(lambda x: not x.startswith("__") and x.endswith(".py"), files)
@@ -51,12 +50,19 @@ def index_modules(directory: str) -> list:
     return modules
 
 
+def list_classes(module_name: str):
+    try:
+        import importlib
+        module = importlib.import_module("modules." + module_name.replace("/", "."))
+        for key, obj in module.__dict__.items():
+            if isinstance(obj, type):
+                yield key
+    except ModuleNotFoundError:
+        print("Can't import module " + module_name)
+
+
 def list_modules(modules: list):
-    # import inspect
-    # import importlib
     for module in modules:
-        # TODO show all className in modules
         print(module.replace(".", "/"))
-        # imported_module = importlib.import_module("modules." + module_name.replace("/", "."))
-        # for (className, _) in inspect.getmembers(module, inspect.isclass):
-        #   print("  + " + className)
+        for class_name in list_classes(module):
+            print("  " + class_name)
