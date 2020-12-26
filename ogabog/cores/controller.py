@@ -8,6 +8,7 @@ MODULE_DIR = "/modules/"
 
 def index_modules(directory: str) -> list:
     """
+    List all modules inside folder
     Source URL:
       https://github.com/threat9/routersploit/blob/fb12ae80086699d23465cacbcc6dc5b291dd2af2/routersploit/core/exploit/utils.py#L84
     License:
@@ -51,6 +52,11 @@ def index_modules(directory: str) -> list:
 
 
 def list_classes(module_name: str):
+    """
+    List all classes in the module with the description
+    :param module_name: name of module to show
+    :return: tuple(name of class, description)
+    """
     try:
         import importlib
         module = importlib.import_module("modules." + module_name.replace("/", "."))
@@ -64,7 +70,51 @@ def list_classes(module_name: str):
 
 
 def list_modules(modules: list):
+    """
+    Show all modules and classes inside each module
+    :param modules: list of all modules
+    :return:
+    """
     for module in modules:
         print(module.replace(".", "/"))
         for class_name, desc in list_classes(module):
             print("  " + class_name + (20 - len(class_name)) * " " + desc)
+
+
+def program_handler(modules, args):
+    """
+    Handle main program by:
+        1. Check args (for core framework)
+        2. Get all invalid args to check in module's args
+        3. Listing all available modules
+        4. Import module with class name (user define) then
+            show final result
+    :param modules: imported module (usually <project.module>)
+    :param args: custom Argparse class from argutils
+    :return:
+    """
+    # https://stackoverflow.com/a/12818237
+    args, un_args = args.parse_known_args()
+    if args.l:
+        modules = index_modules(modules.__path__[0])
+        list_modules(modules)
+    else:
+        module_name = args.p
+        class_name = args.c
+        if module_name and class_name:
+            try:
+                import importlib
+                module = importlib.import_module("modules." + module_name.replace("/", "."))
+                # https://stackoverflow.com/a/41678146
+                # Import class with importlib
+                # https://stackoverflow.com/a/17534365
+                # initialize class to fix the problem can't use methods
+                try:
+                    module = getattr(module, class_name)()
+                except AttributeError:
+                    print("Invalid class name " + class_name + " for module " + module_name)
+                # Parse args from cli, pass into module's args check
+                module_args = module.get_opts().parse_args(un_args)
+                module.show_shell(module_args)
+            except ModuleNotFoundError:
+                print("Invalid module name " + module_name)
