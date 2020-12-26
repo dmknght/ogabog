@@ -48,10 +48,10 @@ class Module(object):
             required=True
         )
         self.opts.print_help()
-
-    def show_shell(self):
-        """
-        Dummy method to show payload
-        :return:
-        """
-        print(self.shell)
+    #
+    # def show_shell(self):
+    #     """
+    #     Dummy method to show payload
+    #     :return:
+    #     """
+    #     print(self.shell)

