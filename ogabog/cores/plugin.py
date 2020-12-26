@@ -9,12 +9,30 @@ class Module(object):
         self.shell = ""
 
     def add_args(self, *args, **kwargs):
+        """
+        Add arguments to group "module" from plugin's call
+        :param args:
+        :param kwargs:
+        :return:
+        """
         self.group_module.add_argument(*args, **kwargs)
 
     def get_opts(self):
+        """
+        Return options, which is parser of argparse
+        :return: argparse
+        """
         return self.opts
 
     def show_help(self, module_name, class_name):
+        """
+        Show custom help which added argument from core framework
+        All arguments are must added to use this plugin so we add
+          it to the required
+        :param module_name: name of imported module
+        :param class_name: name of current class
+        :return:
+        """
         self.core_module.add_argument(
             "-p",
             metavar=module_name,
@@ -32,4 +50,8 @@ class Module(object):
         self.opts.print_help()
 
     def show_shell(self):
+        """
+        Dummy method to show payload
+        :return:
+        """
         print(self.shell)
