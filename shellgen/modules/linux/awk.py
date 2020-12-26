@@ -9,7 +9,7 @@ class ReverseShell(plugin.Module):
             help="IP address"
         )
         self.add_args(
-            "--Port",
+            "--port",
             help="Port address"
         )
         self.opts.description = "Generate reverse shell using awk command"
