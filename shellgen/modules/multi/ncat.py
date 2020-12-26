@@ -1,4 +1,4 @@
-from ogabog.cores import plugin
+from ogabog.cores import plugin, const
 
 
 class ReverseShell(plugin.Module):
@@ -16,11 +16,7 @@ class ReverseShell(plugin.Module):
         self.add_args(
             "--shell",
             default="bash",
-            choices=[
-                'bash',
-                'sh',
-                'dash'
-            ],
+            choices=const.LINUX_SHELL,
             help="Select shell type on target machine"
         )
         self.add_args(
@@ -45,11 +41,7 @@ class ReverseShellUDP(plugin.Module):
         self.add_args(
             "--shell",
             default="bash",
-            choices=[
-                'bash',
-                'sh',
-                'dash'
-            ],
+            choices=const.LINUX_SHELL,
             help="Select shell type on target machine"
         )
         self.add_args(
@@ -74,11 +66,7 @@ class BindShell(plugin.Module):
         self.add_args(
             "--shell",
             default="bash",
-            choices=[
-                'bash',
-                'sh',
-                'dash'
-            ],
+            choices=const.LINUX_SHELL,
             help="Select shell type on target machine"
         )
         self.add_args(
