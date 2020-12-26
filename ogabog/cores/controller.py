@@ -57,6 +57,7 @@ def list_classes(module_name: str):
         for key, obj in module.__dict__.items():
             if isinstance(obj, type):
                 yield key
+        del module
     except ModuleNotFoundError:
         print("Can't import module " + module_name)
 
