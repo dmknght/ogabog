@@ -37,10 +37,11 @@ class ArgumentParser(argparse.ArgumentParser):
                     module = importlib.import_module("modules." + module_name.replace("/", "."))
                     try:
                         module = getattr(module, class_name)()
-                        print("Module " + module_name)  # TODO better msg for print module name and classes
+                        print("Help menu for " + module_name)  # TODO better msg for print module name and classes
                         module.show_help(module_name, class_name)
                         return
                     except AttributeError:
+                        print("Class not found " + class_name + "! Show help for all classes!")
                         pass
                 except ValueError:
                     pass
@@ -51,7 +52,7 @@ class ArgumentParser(argparse.ArgumentParser):
                 # https://stackoverflow.com/a/21563930
                 import importlib
                 module = importlib.import_module("modules." + module_name.replace("/", "."))
-                print("Module " + module_name)  # TODO better msg for print module name and classes
+                print("Help menu for " + module_name)  # TODO better msg for print module name and classes
                 for key, obj in module.__dict__.items():
                     if isinstance(obj, type):
                         print("\n" + key)
