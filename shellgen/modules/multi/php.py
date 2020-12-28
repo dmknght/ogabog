@@ -24,6 +24,7 @@ class ReverseTCP(plugin.ReverseShell):
             ]
         )
         self.opts.description = "[ReverseShell][TCP] PHP from swisskyrepo/PayloadsAllTheThings. License MIT."
+        self.opts.description += "\nModule author: Nguyen Hoang Thanh <smith.nguyenhoangthanh@gmail.com>"
 
     def make_shell(self):
         if self.args.exec == "back_quote":
