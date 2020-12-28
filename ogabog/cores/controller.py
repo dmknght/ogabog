@@ -123,3 +123,23 @@ def program_handler(modules, args):
 
             except ModuleNotFoundError:
                 print("Invalid module name " + module_name)
+
+#
+# def check_env(name: str, list_name: list) -> str:
+#     """
+#     When user type shell, we usually have full path or only exe name
+#     1. bash
+#     2. /bin/bash
+#     3. possibly /usr/bin/bash
+#     We accept bash as /bin/bash from the list
+#     # TODO 1 think about /usr/bin/bash
+#     # TODO 2 more robofust for python-like cases like python, python3
+#         python3.7, python3.8
+#     :param name: user provide
+#     :param list_name: list of choices. Usually a full path of command
+#     :return: path in list or "" as not found
+#     """
+#     for each_name in list_name:
+#         if name == each_name.split("/")[-1]:
+#             return each_name
+#     return ""
