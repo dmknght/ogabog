@@ -9,12 +9,12 @@ class Module(object):
         self.group_module = self.opts.add_argument_group("Module arguments")
         self.args = None
         self.shell = ""
-        self.core_module.add_argument(
-            "--env",
-            default=False,
-            action="store_false",
-            help="Use $PATH for shell"
-        )
+        # self.core_module.add_argument(
+        #     "--env",
+        #     default=False,
+        #     action="store_false",
+        #     help="Use $PATH for shell"
+        # )
 
     def add_args(self, *args, **kwargs):
         """
