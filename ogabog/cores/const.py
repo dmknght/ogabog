@@ -1,12 +1,12 @@
 LINUX_SHELL: list = [
-    'bash',
-    'dash',
-    'sh',
-    'ash',
-    'bsh',
-    'csh',
-    'ksh',
-    'zsh',
-    'pdksh',
-    'tcsh'
+    '/bin/bash',
+    '/bin/dash',
+    '/bin/sh',
+    '/bin/ash',
+    '/bin/bsh',
+    '/bin/csh',
+    '/bin/ksh',
+    '/bin/zsh',
+    '/bin/pdksh',
+    '/bin/tcsh'
 ]
