@@ -1,4 +1,6 @@
 import argparse
+from argparse import ArgumentError
+# from ogabog.cores.controller import check_env
 import sys
 
 DEF_FLAG_MODULE = "-p"
@@ -23,6 +25,7 @@ class ArgumentParser(argparse.ArgumentParser):
         :param file:
         :return:
         """
+        module_name = ""
         try:
             # Find the args that contains "-p" flag
             pos = sys.argv.index(DEF_FLAG_MODULE)
@@ -68,6 +71,29 @@ class ArgumentParser(argparse.ArgumentParser):
         except ModuleNotFoundError:
             self._print_message(self.format_help(), file)
             self._print_message("\nInvalid module name " + module_name)
+
+
+class PluginArgumentParser(argparse.ArgumentParser):
+    def _check_value(self, action, value):
+        """
+        Custom function from original check value of choices
+        https://github.com/python/cpython/blob/master/Lib/argparse.py#L2494
+        :param action:
+        :param value:
+        :return:
+        """
+
+        if action.choices is not None and value not in action.choices\
+                and value not in [x.split("/")[-1] for x in action.choices]:
+            raise ArgumentError(action, "invalid choice: {} from {}".format(value, action.choices))
+            # Comment: Here we try to convert user's choice to full path from list of choice
+            # Then we use flag --env to convert / not convert it to full path / binary name only
+            # For now the "value" is local variable only so it doesn't work
+            # check_value = check_env(value, action.choices)
+            # if not check_value:
+            #     raise ArgumentError(action, "invalid choice: {} from {}".format(value, action.choices))
+            # else:
+            #     value = check_value
 
 
 def core_args():

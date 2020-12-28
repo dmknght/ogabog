@@ -1,13 +1,20 @@
-import argparse
+# import argparse
+from ogabog.cores import argutils
 
 
 class Module(object):
     def __init__(self):
-        self.opts = argparse.ArgumentParser()
+        self.opts = argutils.PluginArgumentParser()
         self.core_module = self.opts.add_argument_group("Framework arguments")
         self.group_module = self.opts.add_argument_group("Module arguments")
         self.args = None
         self.shell = ""
+        self.core_module.add_argument(
+            "--env",
+            default=False,
+            action="store_false",
+            help="Use $PATH for shell"
+        )
 
     def add_args(self, *args, **kwargs):
         """
@@ -48,6 +55,7 @@ class Module(object):
             help="Select class " + class_name,
             required=True
         )
+
         self.opts.print_help()
 
     def make_shell(self):
@@ -58,6 +66,8 @@ class Module(object):
         Dummy method to show payload
         :return:
         """
+        if self.args.env:
+            self.args.shell = self.args.shell.split("/")[-1]
         self.make_shell()
         print(self.shell)
 
