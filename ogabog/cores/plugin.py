@@ -66,8 +66,8 @@ class Module(object):
         Dummy method to show payload
         :return:
         """
-        if self.args.env:
-            self.args.shell = self.args.shell.split("/")[-1]
+        # if self.args.env:
+        #     self.args.shell = self.args.shell.split("/")[-1]
         self.make_shell()
         print(self.shell)
 
