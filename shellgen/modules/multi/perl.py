@@ -31,7 +31,7 @@ class TTY(plugin.Module):
             choices=const.LINUX_SHELL,
             help="Select shell type on target machine"
         )
-        self.opts.description = "[TTYShell][TCP] Perl TTY shell escape from https://netsec.ws/?p=337"
+        self.opts.description = "[TTYShell] Perl TTY shell escape from https://netsec.ws/?p=337"
         self.opts.description += "\nModule author: Nong Hoang Tu <dmknght@parrotsec.org>"
 
     def make_shell(self):
