@@ -66,8 +66,6 @@ class Module(object):
         Dummy method to show payload
         :return:
         """
-        # if self.args.env:
-        #     self.args.shell = self.args.shell.split("/")[-1]
         self.make_shell()
         print(self.shell)
 
@@ -85,6 +83,19 @@ class ReverseShell(Module):
             help="Port address",
             required=True
         )
+        self.add_args(
+            "--listener",
+            help="Create listener",
+        )
+
+    def handler(self):
+        """
+        Create reverse shell handler
+        :return:
+        """
+        if self.args.listener:
+            pass
+        pass
 
 
 class BindShell(Module):
@@ -95,4 +106,16 @@ class BindShell(Module):
             help="Port address",
             required=True
         )
-        self.opts.description = "[BindShell][TCP] Netcat from swisskyrepo/PayloadsAllTheThings. License MIT."
+        self.add_args(
+            "--listener",
+            help="Create listener",
+        )
+
+    def handler(self):
+        """
+        Create reverse shell handler
+        :return:
+        """
+        if self.args.listener:
+            pass
+        pass
