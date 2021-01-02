@@ -93,9 +93,17 @@ class ReverseShell(Module):
         Create reverse shell handler
         :return:
         """
-        if self.args.listener:
-            pass
         pass
+
+    def run(self):
+        """
+        Dummy method to show payload
+        :return:
+        """
+        self.make_shell()
+        print(self.shell)
+        if self.args.listener:
+            self.handler()
 
 
 class BindShell(Module):
@@ -118,4 +126,13 @@ class BindShell(Module):
         """
         if self.args.listener:
             pass
-        pass
+
+    def run(self):
+        """
+        Dummy method to show payload
+        :return:
+        """
+        self.make_shell()
+        print(self.shell)
+        if self.args.listener:
+            self.handler()
