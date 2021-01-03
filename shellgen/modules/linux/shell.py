@@ -26,6 +26,7 @@ class ReverseUDP(plugin.ReverseShell):
             choices=const.LINUX_SHELL,
             help="Select shell type on target machine"
         )
+        self.is_udp = True
         self.opts.description = "[ReverseShell][UDP] Generic shells from swisskyrepo/PayloadsAllTheThings. License MIT."
         self.opts.description += "\nModule author: Nong Hoang Tu <dmknght@parrotsec.org>"
 
