@@ -94,6 +94,7 @@ class ReverseShell(Module):
         Create reverse shell handler
         :return:
         """
+        # TODO handle UDP as well as TCP
         from ogabog.cores import handler
         handler.reverse_tcp(self.args.ip, self.args.port, "test module", __name__)  # FIXME edit module name and class name
 
