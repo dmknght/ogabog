@@ -8,6 +8,16 @@ def prompt(ip, port, module, class_name):
     return prompt_value
 
 
+def recv_all(sock_recv):
+    sz_buff = 512
+    result = ""
+    while True:
+        data = sock_recv(sz_buff).decode()
+        result += data
+        if len(data) < sz_buff:
+            return result
+
+
 def interpreter(cmd_prompt, sock_send, sock_recv):
     while True:
         try:
@@ -19,8 +29,12 @@ def interpreter(cmd_prompt, sock_send, sock_recv):
                     return
                 else:
                     sock_send(cmd.encode())
-                    # FIXME program hangs for empty data
-                    print(sock_recv(1024).decode())
+                    # data = sock_recv(1024).decode()
+                    data = recv_all(sock_recv)
+                    if data:
+                        print(data)
+                    else:
+                        print("Empty data from client")
         except KeyboardInterrupt:
             choice = input("Do you want to quit? [Y] ")
             if choice in ("yes", "Yes", "y", "Y"):
@@ -29,6 +43,8 @@ def interpreter(cmd_prompt, sock_send, sock_recv):
         except BrokenPipeError:
             print("[x] BrokenPipeError!")
             return
+        except socket.timeout:
+            print("[x] Timed out! Client sent empty data or client disconnected!")
         except Exception as error:
             print("[x] Runtime error")
             print(error)
@@ -60,6 +76,7 @@ def reverse_tcp(ip, port, module_name, class_name):
 
     try:
         client, client_addr = svr.accept()
+        client.settimeout(5)
         print("Connected from", client_addr)
 
         sock_send = client.sendall
