@@ -56,19 +56,24 @@ def reverse_tcp(ip, port, module_name, class_name):
         print(error)
         return
 
-    client, client_addr = svr.accept()
-    print("Connected from", client_addr)
-
-    sock_send = client.sendall
-    sock_recv = client.recv
-
     try:
+        client, client_addr = svr.accept()
+        print("Connected from", client_addr)
+
+        sock_send = client.sendall
+        sock_recv = client.recv
+
         interpreter(cmd_prompt, sock_send, sock_recv)
+    except KeyboardInterrupt:
+        print("[*] Canceled by user")
     except Exception as error:
         print("[x] Runtime error")
         print(error)
     finally:
-        client.close()
+        try:
+            client.close()
+        except UnboundLocalError:
+            pass
         svr.close()
 
 
@@ -96,17 +101,22 @@ def reverse_udp(ip, port, module_name, class_name):
         print(error)
         return
 
-    client, client_addr = svr.accept()
-    print("Connected from", client_addr)
-
-    sock_send = client.sendto
-    sock_recv = client.recvfrom
-
     try:
+        client, client_addr = svr.accept()
+        print("Connected from", client_addr)
+
+        sock_send = client.sendto
+        sock_recv = client.recvfrom
+
         interpreter(cmd_prompt, sock_send, sock_recv)
+    except KeyboardInterrupt:
+        print("[*] Canceled by user")
     except Exception as error:
         print("[x] Runtime error")
         print(error)
     finally:
-        client.close()
+        try:
+            client.close()
+        except UnboundLocalError:
+            pass
         svr.close()
