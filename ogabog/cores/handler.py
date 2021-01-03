@@ -13,20 +13,22 @@ def interpreter(cmd_prompt, sock_send, sock_recv):
         try:
             # TODO support history
             cmd = input(cmd_prompt) + "\n"
-            if cmd != "":
+            if cmd != "\n":
                 if cmd == "exit\n" or cmd == "quit\n":
                     sock_send("exit".encode())
                     return
                 else:
                     sock_send(cmd.encode())
+                    # FIXME program hangs for empty data
                     print(sock_recv(1024).decode())
-            else:
-                print(cmd_prompt, end="")
         except KeyboardInterrupt:
             choice = input("Do you want to quit? [Y] ")
             if choice in ("yes", "Yes", "y", "Y"):
                 sock_send("exit".encode())
                 return
+        except BrokenPipeError:
+            print("[x] BrokenPipeError!")
+            return
         except Exception as error:
             print("[x] Runtime error")
             print(error)
