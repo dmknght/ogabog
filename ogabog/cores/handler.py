@@ -51,7 +51,7 @@ def interpreter(cmd_prompt, sock_send, sock_recv):
             return
 
 
-def reverse_tcp(ip, port, module_name, class_name):
+def reverse_tcp(ip, port, module_name, class_name, timeout):
     """
     Create Reverse Shell handler for TCP connection
     TODO support IPv6
@@ -59,6 +59,7 @@ def reverse_tcp(ip, port, module_name, class_name):
     :param port: int: port number of attacker
     :param module_name: name of module that calls this function
     :param class_name: name of class that calls this function
+    :param timeout: int socket's timeout
     :return:
     """
     cmd_prompt = prompt(ip, port, module_name, class_name)
@@ -74,9 +75,10 @@ def reverse_tcp(ip, port, module_name, class_name):
         print(error)
         return
 
+    client, client_addr = svr.accept()
+
     try:
-        client, client_addr = svr.accept()
-        client.settimeout(5)
+        client.settimeout(timeout)
         print("Connected from", client_addr)
 
         sock_send = client.sendall
@@ -96,7 +98,7 @@ def reverse_tcp(ip, port, module_name, class_name):
         svr.close()
 
 
-def reverse_udp(ip, port, module_name, class_name):
+def reverse_udp(ip, port, module_name, class_name, timeout):
     """
     Create Reverse Shell handler for UDP connection
     TODO support IPv6
@@ -104,6 +106,7 @@ def reverse_udp(ip, port, module_name, class_name):
     :param port: int: port number of attacker
     :param module_name: name of module that calls this function
     :param class_name: name of class that calls this function
+    :param timeout: int socket's timeout
     :return:
     """
     cmd_prompt = prompt(ip, port, module_name, class_name)
@@ -120,8 +123,10 @@ def reverse_udp(ip, port, module_name, class_name):
         print(error)
         return
 
+    client, client_addr = svr.accept()
+
     try:
-        client, client_addr = svr.accept()
+        client.settimeout(timeout)
         print("Connected from", client_addr)
 
         sock_send = client.sendto

@@ -107,6 +107,14 @@ class ReverseShell(Module):
             metavar="Port",
             required=False
         )
+        self.group_handler.add_argument(
+            "--timeout",
+            help="Socket timeout",
+            metavar="Timeout",
+            type=int,
+            default=3,
+            required=False
+        )
         self.is_udp = False
 
     def handler(self):
@@ -119,9 +127,9 @@ class ReverseShell(Module):
         listen_port = self.args.lport if self.args.lport else self.args.port
 
         if self.is_udp:
-            handler.reverse_udp(listen_addr, listen_port, self.module_name, self.class_name)
+            handler.reverse_udp(listen_addr, listen_port, self.module_name, self.class_name, self.args.timeout)
         else:
-            handler.reverse_tcp(listen_addr, listen_port, self.module_name, self.class_name)
+            handler.reverse_tcp(listen_addr, listen_port, self.module_name, self.class_name, self.args.timeout)
 
     def run(self):
         """
