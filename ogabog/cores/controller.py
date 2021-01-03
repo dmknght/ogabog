@@ -75,14 +75,23 @@ def list_modules(modules: list):
     :param modules: list of all modules
     :return:
     """
+    sz_modules = 0
+    sz_classes = 0
+
     for module in modules:
+        sz_modules += 1
         print(module.replace(".", "/"))
         for class_name, desc in list_classes(module):
+            sz_classes += 1
             try:
                 description = desc.split("\n")[0]
                 print("  " + class_name + (20 - len(class_name)) * " " + description)
             except ValueError:
                 print("  " + class_name + (20 - len(class_name)) * " " + desc)
+    if sz_modules == 1:
+        print("\nTotal: class[es] {}".format(sz_classes))
+    else:
+        print("\nTotal: {} classes of {} modules".format(sz_classes, sz_modules))
 
 
 def program_handler(modules, args):
