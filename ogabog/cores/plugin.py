@@ -88,6 +88,7 @@ class ReverseShell(Module):
             action='store_true',
             help="Create listener",
         )
+        self.is_udp = False
 
     def handler(self):
         """
@@ -96,7 +97,10 @@ class ReverseShell(Module):
         """
         # TODO handle UDP as well as TCP
         from ogabog.cores import handler
-        handler.reverse_tcp(self.args.ip, self.args.port, "test module", __name__)  # FIXME edit module name and class name
+        if self.is_udp:
+            handler.reverse_udp(self.args.ip, self.args.port, "test module", __name__)
+        else:
+            handler.reverse_tcp(self.args.ip, self.args.port, "test module", __name__)
 
     def run(self):
         """
@@ -122,6 +126,7 @@ class BindShell(Module):
             action='store_true',
             help="Create listener",
         )
+        self.is_udp = False
 
     def handler(self):
         """
