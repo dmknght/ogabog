@@ -84,7 +84,41 @@ class ReverseShell(Module):
             required=True
         )
         self.add_args(
-            "--listener",
+            "--listen",
+            action='store_true',
+            help="Create listener",
+        )
+
+    def handler(self):
+        """
+        Create reverse shell handler
+        :return:
+        """
+        from ogabog.cores import handler
+        handler.reverse_con(self.args.ip, self.args.port, "test module", __name__)  # FIXME edit module name and class name
+
+    def run(self):
+        """
+        Dummy method to show payload
+        :return:
+        """
+        self.make_shell()
+        print(self.shell)
+        if self.args.listen:
+            self.handler()
+
+
+class BindShell(Module):
+    def __init__(self):
+        super().__init__()
+        self.add_args(
+            "--port",
+            help="Port address",
+            required=True
+        )
+        self.add_args(
+            "--listen",
+            action='store_true',
             help="Create listener",
         )
 
@@ -102,37 +136,5 @@ class ReverseShell(Module):
         """
         self.make_shell()
         print(self.shell)
-        if self.args.listener:
-            self.handler()
-
-
-class BindShell(Module):
-    def __init__(self):
-        super().__init__()
-        self.add_args(
-            "--port",
-            help="Port address",
-            required=True
-        )
-        self.add_args(
-            "--listener",
-            help="Create listener",
-        )
-
-    def handler(self):
-        """
-        Create reverse shell handler
-        :return:
-        """
-        if self.args.listener:
-            pass
-
-    def run(self):
-        """
-        Dummy method to show payload
-        :return:
-        """
-        self.make_shell()
-        print(self.shell)
-        if self.args.listener:
+        if self.args.listen:
             self.handler()

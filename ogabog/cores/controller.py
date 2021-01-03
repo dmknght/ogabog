@@ -98,13 +98,13 @@ def program_handler(modules, args):
     :return:
     """
     # https://stackoverflow.com/a/12818237
-    args, un_args = args.parse_known_args()
-    if args.l:
+    usr_args, un_args = args.parse_known_args()
+    if usr_args.l:
         modules = index_modules(modules.__path__[0])
         list_modules(modules)
     else:
-        module_name = args.p
-        class_name = args.c
+        module_name = usr_args.p
+        class_name = usr_args.c
         if module_name and class_name:
             try:
                 import importlib
@@ -123,6 +123,16 @@ def program_handler(modules, args):
 
             except ModuleNotFoundError:
                 print("Invalid module name " + module_name)
+        else:
+            if module_name:
+                if not class_name:
+                    print("[x] No class name provided!")
+                    # TODO list all class name in module
+            else:
+                if class_name:
+                    print("[x] No module name provided")
+                else:
+                    args.print_help()
 
 #
 # def check_env(name: str, list_name: list) -> str:
