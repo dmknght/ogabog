@@ -95,7 +95,7 @@ class ReverseShell(Module):
         :return:
         """
         from ogabog.cores import handler
-        handler.reverse_con(self.args.ip, self.args.port, "test module", __name__)  # FIXME edit module name and class name
+        handler.reverse_tcp(self.args.ip, self.args.port, "test module", __name__)  # FIXME edit module name and class name
 
     def run(self):
         """

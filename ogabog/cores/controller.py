@@ -126,8 +126,8 @@ def program_handler(modules, args):
         else:
             if module_name:
                 if not class_name:
-                    print("[x] No class name provided!")
-                    # TODO list all class name in module
+                    print("[x] No class name provided! Please add \"-c <ClassName>\" from list of classes below")
+                    list_modules([module_name])
             else:
                 if class_name:
                     print("[x] No module name provided")

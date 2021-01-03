@@ -8,7 +8,7 @@ def prompt(ip, port, module, class_name):
     return prompt_value
 
 
-def reverse_con(ip, port, module, class_name):
+def reverse_tcp(ip, port, module, class_name):
     """
     Create Reverse Shell handler
     # TODO support IPv6
