@@ -124,6 +124,7 @@ def program_handler(modules, args):
                 # initialize class to fix the problem can't use methods
                 try:
                     module = getattr(module, class_name)()
+                    module.init_name(module_name, class_name)
                 except AttributeError:
                     print("Invalid class name " + class_name + " for module " + module_name)
                 # Parse args from cli, pass into module's args check

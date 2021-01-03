@@ -9,6 +9,8 @@ class Module(object):
         self.group_module = self.opts.add_argument_group("Module arguments")
         self.args = None
         self.shell = ""
+        self.module_name = ""
+        self.class_name = ""
         # self.core_module.add_argument(
         #     "--env",
         #     default=False,
@@ -58,6 +60,10 @@ class Module(object):
 
         self.opts.print_help()
 
+    def init_name(self, module_name, class_name):
+        self.module_name = module_name
+        self.class_name = class_name
+
     def make_shell(self):
         pass
 
@@ -95,12 +101,11 @@ class ReverseShell(Module):
         Create reverse shell handler
         :return:
         """
-        # TODO handle UDP as well as TCP
         from ogabog.cores import handler
         if self.is_udp:
-            handler.reverse_udp(self.args.ip, self.args.port, "test module", __name__)
+            handler.reverse_udp(self.args.ip, self.args.port, self.module_name, self.class_name)
         else:
-            handler.reverse_tcp(self.args.ip, self.args.port, "test module", __name__)
+            handler.reverse_tcp(self.args.ip, self.args.port, self.module_name, self.class_name)
 
     def run(self):
         """
