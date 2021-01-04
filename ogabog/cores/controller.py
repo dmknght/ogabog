@@ -83,11 +83,12 @@ def list_modules(modules: list):
         print(module.replace(".", "/"))
         for class_name, desc in list_classes(module):
             sz_classes += 1
+            # https://stackoverflow.com/a/38228621
             try:
                 description = desc.split("\n")[0]
-                print("  " + class_name + (20 - len(class_name)) * " " + description)
+                print(f"  {class_name}{' ': <{20 - len(class_name)}} {description}")
             except ValueError:
-                print("  " + class_name + (20 - len(class_name)) * " " + desc)
+                print(f"  {class_name}{' ': <{20 - len(class_name)}} {desc}")
     if sz_modules == 1:
         print(f"\nTotal: class[es] {sz_classes}")
     else:
