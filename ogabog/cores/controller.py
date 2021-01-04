@@ -66,7 +66,7 @@ def list_classes(module_name: str):
                 yield key, desc
         del module
     except ModuleNotFoundError:
-        print("Can't import module " + module_name)
+        print(f"Can't import module {module_name}")
 
 
 def list_modules(modules: list):
@@ -89,9 +89,9 @@ def list_modules(modules: list):
             except ValueError:
                 print("  " + class_name + (20 - len(class_name)) * " " + desc)
     if sz_modules == 1:
-        print("\nTotal: class[es] {}".format(sz_classes))
+        print(f"\nTotal: class[es] {sz_classes}")
     else:
-        print("\nTotal: {} classes of {} modules".format(sz_classes, sz_modules))
+        print(f"\nTotal: {sz_classes} classes of {sz_modules} modules")
 
 
 def program_handler(modules, args):
@@ -126,13 +126,13 @@ def program_handler(modules, args):
                     module = getattr(module, class_name)()
                     module.init_name(module_name, class_name)
                 except AttributeError:
-                    print("Invalid class name " + class_name + " for module " + module_name)
+                    print(f"[x] Invalid class name {class_name} for module {module_name}")
                 # Parse args from cli, pass into module's args check
                 module.args = module.get_opts().parse_args(un_args)
                 module.run()
 
             except ModuleNotFoundError:
-                print("Invalid module name " + module_name)
+                print(f"[x] Invalid module name {module_name}")
         else:
             if module_name:
                 if not class_name:

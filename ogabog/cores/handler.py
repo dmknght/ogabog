@@ -69,7 +69,7 @@ def reverse_tcp(ip, port, module_name, class_name, timeout):
     try:
         svr.bind((ip, int(port)))
         svr.listen(1)  # TODO listen more?
-        print("Waiting for connection at {}:{}".format(ip, port))
+        print(f"Waiting for connection at {ip}:{port}")
     except Exception as error:
         print("[x] Error while create listener")
         print(error)
@@ -79,7 +79,7 @@ def reverse_tcp(ip, port, module_name, class_name, timeout):
 
     try:
         client.settimeout(timeout)
-        print("Connected from", client_addr)
+        print(f"Connected from {client_addr}")
 
         sock_send = client.sendall
         sock_recv = client.recv
@@ -104,7 +104,7 @@ def reverse_udp(ip, port, module_name, class_name, timeout):
     TODO support IPv6
     :param ip: string: IP address of attacker
     :param port: int: port number of attacker
-    :param module_name: name of module that calls this function
+    :param module_name: name of module that calls this functionl
     :param class_name: name of class that calls this function
     :param timeout: int socket's timeout
     :return:
@@ -117,7 +117,7 @@ def reverse_udp(ip, port, module_name, class_name, timeout):
     try:
         svr.bind((ip, int(port)))
         svr.listen(1)  # TODO listen more?
-        print("Waiting for connection at {}:{}".format(ip, port))
+        print(f"Waiting for connection at {ip}:{port}")
     except Exception as error:
         print("[x] Error while create listener")
         print(error)
@@ -127,7 +127,7 @@ def reverse_udp(ip, port, module_name, class_name, timeout):
 
     try:
         client.settimeout(timeout)
-        print("Connected from", client_addr)
+        print(f"Connected from {client_addr}")
 
         sock_send = client.sendto
         sock_recv = client.recvfrom

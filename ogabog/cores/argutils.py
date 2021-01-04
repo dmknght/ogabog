@@ -40,11 +40,11 @@ class ArgumentParser(argparse.ArgumentParser):
                     module = importlib.import_module("modules." + module_name.replace("/", "."))
                     try:
                         module = getattr(module, class_name)()
-                        print("Help menu for " + module_name)  # TODO better msg for print module name and classes
+                        print(f"Help module: {module_name}")
                         module.show_help(module_name, class_name)
                         return
                     except AttributeError:
-                        print("Class not found " + class_name + "! Show help for all classes!")
+                        print(f"Class not found {class_name}! Show help for all classes!")
                         pass
                 except ValueError:
                     pass
@@ -55,22 +55,22 @@ class ArgumentParser(argparse.ArgumentParser):
                 # https://stackoverflow.com/a/21563930
                 import importlib
                 module = importlib.import_module("modules." + module_name.replace("/", "."))
-                print("Help menu for " + module_name)  # TODO better msg for print module name and classes
+                print(f"Help module: {module_name}")
                 for key, obj in module.__dict__.items():
                     if isinstance(obj, type):
-                        print("\n" + key)
+                        print(f"\n{key}")
                         # Show custom help of each module
                         obj().show_help(module_name, key)
 
             else:
                 # Wrong module name
                 self._print_message(self.format_help(), file)
-                self._print_message("\nInvalid module name " + module_name)
+                self._print_message(f"\nInvalid module name {module_name}")
         except ValueError:
             self._print_message(self.format_help(), file)
         except ModuleNotFoundError:
             self._print_message(self.format_help(), file)
-            self._print_message("\nInvalid module name " + module_name)
+            self._print_message(f"\nInvalid module name {module_name}")
 
 
 class PluginArgumentParser(argparse.ArgumentParser):
