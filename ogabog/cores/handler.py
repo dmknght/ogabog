@@ -75,9 +75,8 @@ def reverse_tcp(ip, port, module_name, class_name, timeout):
         print(error)
         return
 
-    client, client_addr = svr.accept()
-
     try:
+        client, client_addr = svr.accept()
         client.settimeout(timeout)
         print(f"Connected from {client_addr}")
 
@@ -123,9 +122,8 @@ def reverse_udp(ip, port, module_name, class_name, timeout):
         print(error)
         return
 
-    client, client_addr = svr.accept()
-
     try:
+        client, client_addr = svr.accept()
         client.settimeout(timeout)
         print(f"Connected from {client_addr}")
 
