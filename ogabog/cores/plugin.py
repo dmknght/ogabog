@@ -155,6 +155,27 @@ class BindShell(Module):
             action='store_true',
             help="Create listener",
         )
+        self.group_handler = self.opts.add_argument_group("Handler arguments")
+        self.group_handler.add_argument(
+            "--lhost",
+            help="Listener's address",
+            metavar="IP",
+            required=False
+        )
+        self.group_handler.add_argument(
+            "--lport",
+            help="Listener's port",
+            metavar="Port",
+            required=False
+        )
+        self.group_handler.add_argument(
+            "--timeout",
+            help="Socket timeout",
+            metavar="Timeout",
+            type=int,
+            default=3,
+            required=False
+        )
         self.is_udp = False
 
     def handler(self):
@@ -162,7 +183,14 @@ class BindShell(Module):
         Create reverse shell handler
         :return:
         """
-        pass
+        from ogabog.cores import handler
+        listen_addr = self.args.lhost if self.args.lhost else self.args.ip
+        listen_port = self.args.lport if self.args.lport else self.args.port
+
+        if self.is_udp:
+            handler.bind_udp(listen_addr, listen_port, self.module_name, self.class_name, self.args.timeout)
+        else:
+            handler.bind_tcp(listen_addr, listen_port, self.module_name, self.class_name, self.args.timeout)
 
     def run(self):
         """

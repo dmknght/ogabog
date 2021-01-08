@@ -142,3 +142,35 @@ def reverse_udp(ip, port, module_name, class_name, timeout):
         except UnboundLocalError:
             pass
         svr.close()
+
+
+def bind_udp(ip, port, module_name, class_name, timeout):
+    client = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    try:
+        input(f"Press any key to start connect to {ip}:{port}... ")
+        client.settimeout(timeout)
+        client.connect((ip, port))
+        sock_send = client.sendall
+        sock_recv = client.recv
+        cmd_prompt = prompt(ip, port, module_name, class_name)
+        interpreter(cmd_prompt, sock_send, sock_recv)
+    except Exception as error:
+        print(f"[x] Error while connect to {ip}:{port}\n{error}")
+    finally:
+        client.close()
+
+
+def bind_tcp(ip, port, module_name, class_name, timeout):
+    client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    try:
+        input(f"Press any key to start connect to {ip}:{port}... ")
+        client.settimeout(timeout)
+        client.connect((ip, int(port)))
+        sock_send = client.sendall
+        sock_recv = client.recv
+        cmd_prompt = prompt(ip, port, module_name, class_name)
+        interpreter(cmd_prompt, sock_send, sock_recv)
+    except Exception as error:
+        print(f"[x] Error while connect to {ip}:{port}\n{error}")
+    finally:
+        client.close()
