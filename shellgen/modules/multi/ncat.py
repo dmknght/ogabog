@@ -65,4 +65,4 @@ class BindTCP(plugin.BindShell):
         self.opts.description += "\nModule author: Nong Hoang Tu <dmknght@parrotsec.org>"
 
     def make_shell(self):
-        self.shell = f"{self.args.type} -l {self.args.port} -e {self.args.shell}"
+        self.shell = f"{self.args.type} -lp {self.args.port} -e {self.args.shell}"
