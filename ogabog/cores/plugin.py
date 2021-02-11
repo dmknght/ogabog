@@ -10,6 +10,7 @@ class Module(object):
         self.shell = ""
         self.module_name = ""
         self.class_name = ""
+        self.extension = ""
 
     def add_args(self, *args, **kwargs):
         """
@@ -110,15 +111,15 @@ class Module(object):
             import sys
             if "--out" in sys.argv:
                 write_path = self.args.out
-                if write_path:
-                    f = open(write_path, "w")
-                    f.write(self.shell)
-                    f.close()
-                    print(f"[+] New shell at {write_path}")
-                else:
-                    print("[x] No file path provided")
-                    # TODO automatic handle output file here
-                    # TODO gen file name from self.class_name and self.module_name
+                if not write_path:
+                    print("[!] Generating custom path")
+                    write_path = f"/tmp/{self.module_name.replace('/', '_')}_{self.class_name}"
+                    if self.extension:
+                        write_path = f"{write_path}.{self.extension}"
+                f = open(write_path, "w")
+                f.write(self.shell)
+                f.close()
+                print(f"[+] New shell at {write_path}")
             else:
                 print(self.shell)
         except PermissionError:
