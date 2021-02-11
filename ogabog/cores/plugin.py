@@ -17,7 +17,7 @@ class Module(object):
             metavar="Path_to_write",
             default="/tmp/outfile",
             help="Set save file path",
-            required=True
+            required=False
         )
 
     def add_args(self, *args, **kwargs):
