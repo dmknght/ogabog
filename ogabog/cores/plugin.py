@@ -14,9 +14,9 @@ class Module(object):
 
         self.group_module.add_argument(
             "--out",
-            # metavar="File path",
+            metavar="Path_to_write",
             default="/tmp/outfile",
-            help="Set path to save file",  # TODO edit here
+            help="Set save file path",
             required=True
         )
 
@@ -135,7 +135,8 @@ class ReverseShell(Module):
 
     def run(self):
         """
-        Dummy method to show payload
+        Show payload to terminal or generate file
+        Then set listener or not as user's choice
         :return:
         """
         self.make_shell()
@@ -205,10 +206,20 @@ class BindShell(Module):
 
     def run(self):
         """
-        Dummy method to show payload
+        Show payload to terminal or generate file
+        Then set listener or not as user's choice
         :return:
         """
         self.make_shell()
-        print(self.shell)
+        if not self.args.out:
+            print(self.shell)
+        else:
+            try:
+                f = open(self.args.out, "w")
+                f.write(self.shell)
+                f.close()
+                print(f"[+] New shell at {self.args.out}")
+            except:
+                print(f"[x] Error while writing shell to {self.args.out}")
         if self.args.listen:
             self.handler()
