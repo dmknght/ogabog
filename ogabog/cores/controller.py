@@ -134,6 +134,9 @@ def program_handler(modules, args):
 
             except ModuleNotFoundError:
                 print(f"[x] Invalid module name {module_name}")
+            except AttributeError:
+                # Error msg was handled
+                pass
         else:
             if module_name:
                 if not class_name:
