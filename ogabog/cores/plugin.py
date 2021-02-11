@@ -81,10 +81,14 @@ class Module(object):
         pass
 
     def set_write_file(self):
+        # Allow user to provide --out without the full path
+        # https://stackoverflow.com/a/30897095
         self.add_args(
             "--out",
+            nargs="?",
             metavar="Path_to_write",
             default="/tmp/outfile",
+            const="",
             help="Set save file path",
             required=False,
         )
@@ -113,6 +117,8 @@ class Module(object):
                     print(f"[+] New shell at {write_path}")
                 else:
                     print("[x] No file path provided")
+                    # TODO automatic handle output file here
+                    # TODO gen file name from self.class_name and self.module_name
             else:
                 print(self.shell)
         except PermissionError:
