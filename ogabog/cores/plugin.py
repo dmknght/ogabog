@@ -11,12 +11,14 @@ class Module(object):
         self.shell = ""
         self.module_name = ""
         self.class_name = ""
-        # self.core_module.add_argument(
-        #     "--env",
-        #     default=False,
-        #     action="store_false",
-        #     help="Use $PATH for shell"
-        # )
+
+        self.group_module.add_argument(
+            "--out",
+            # metavar="File path",
+            default="/tmp/outfile",
+            help="Set path to save file",  # TODO edit here
+            required=True
+        )
 
     def add_args(self, *args, **kwargs):
         """
@@ -137,7 +139,16 @@ class ReverseShell(Module):
         :return:
         """
         self.make_shell()
-        print(self.shell)
+        if not self.args.out:
+            print(self.shell)
+        else:
+            try:
+                f = open(self.args.out, "w")
+                f.write(self.shell)
+                f.close()
+                print(f"[+] New shell at {self.args.out}")
+            except:
+                print(f"[x] Error while writing shell to {self.args.out}")
         if self.args.listen:
             self.handler()
 
