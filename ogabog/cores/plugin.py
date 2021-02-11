@@ -86,7 +86,7 @@ class Module(object):
             metavar="Path_to_write",
             default="/tmp/outfile",
             help="Set save file path",
-            required=False
+            required=False,
         )
 
     def run(self):
@@ -106,10 +106,13 @@ class Module(object):
             import sys
             if "--out" in sys.argv:
                 write_path = self.args.out
-                f = open(write_path, "w")
-                f.write(self.shell)
-                f.close()
-                print(f"[+] New shell at {self.args.out}")
+                if write_path:
+                    f = open(write_path, "w")
+                    f.write(self.shell)
+                    f.close()
+                    print(f"[+] New shell at {write_path}")
+                else:
+                    print("[x] No file path provided")
             else:
                 print(self.shell)
         except PermissionError:
