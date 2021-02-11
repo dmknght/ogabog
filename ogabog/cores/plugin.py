@@ -1,4 +1,3 @@
-# import argparse
 from ogabog.cores import argutils
 
 
@@ -11,14 +10,6 @@ class Module(object):
         self.shell = ""
         self.module_name = ""
         self.class_name = ""
-
-        self.group_module.add_argument(
-            "--out",
-            metavar="Path_to_write",
-            default="/tmp/outfile",
-            help="Set save file path",
-            required=False
-        )
 
     def add_args(self, *args, **kwargs):
         """
@@ -67,15 +58,67 @@ class Module(object):
         self.class_name = class_name
 
     def make_shell(self):
+        """
+        Dummy make shell method for Base class
+        :return:
+        """
         pass
+
+    def make_shell_file(self):
+        """
+        Dummy make shell method for Base class
+        This module is used when users want to create
+        file and write to disk instead of output command
+        :return:
+        """
+        pass
+
+    def handler(self):
+        """
+        Dummy handler of listener for Base class
+        :return:
+        """
+        pass
+
+    def set_write_file(self):
+        self.add_args(
+            "--out",
+            metavar="Path_to_write",
+            default="/tmp/outfile",
+            help="Set save file path",
+            required=False
+        )
 
     def run(self):
         """
-        Dummy method to show payload
+        Show payload to terminal or generate file
+        Then set listener or not as user's choice
         :return:
         """
         self.make_shell()
-        print(self.shell)
+        # We check if user provided --out flag
+        # If user didn't, the exception raises AttributeError
+        write_path = ""
+        try:
+            # In some modules, --out flag will have default value
+            # We try to figure it out did users want to write a file
+            # or print output only
+            import sys
+            if "--out" in sys.argv:
+                write_path = self.args.out
+                f = open(write_path, "w")
+                f.write(self.shell)
+                f.close()
+                print(f"[+] New shell at {self.args.out}")
+            else:
+                print(self.shell)
+        except PermissionError:
+            print(f"[x] Failed to write file at {write_path}: Permission Denied")
+        except AttributeError:
+            print(self.shell)
+
+        if self.args.listen:
+            self.handler()
 
 
 class ReverseShell(Module):
@@ -133,26 +176,6 @@ class ReverseShell(Module):
         else:
             handler.reverse_tcp(listen_addr, listen_port, self.module_name, self.class_name, self.args.timeout)
 
-    def run(self):
-        """
-        Show payload to terminal or generate file
-        Then set listener or not as user's choice
-        :return:
-        """
-        self.make_shell()
-        if not self.args.out:
-            print(self.shell)
-        else:
-            try:
-                f = open(self.args.out, "w")
-                f.write(self.shell)
-                f.close()
-                print(f"[+] New shell at {self.args.out}")
-            except:
-                print(f"[x] Error while writing shell to {self.args.out}")
-        if self.args.listen:
-            self.handler()
-
 
 class BindShell(Module):
     def __init__(self):
@@ -203,23 +226,3 @@ class BindShell(Module):
             handler.bind_udp(listen_addr, listen_port, self.module_name, self.class_name, self.args.timeout)
         else:
             handler.bind_tcp(listen_addr, listen_port, self.module_name, self.class_name, self.args.timeout)
-
-    def run(self):
-        """
-        Show payload to terminal or generate file
-        Then set listener or not as user's choice
-        :return:
-        """
-        self.make_shell()
-        if not self.args.out:
-            print(self.shell)
-        else:
-            try:
-                f = open(self.args.out, "w")
-                f.write(self.shell)
-                f.close()
-                print(f"[+] New shell at {self.args.out}")
-            except:
-                print(f"[x] Error while writing shell to {self.args.out}")
-        if self.args.listen:
-            self.handler()
