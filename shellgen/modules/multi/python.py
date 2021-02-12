@@ -68,6 +68,7 @@ class TTY(plugin.Module):
         self.opts.description = "[TTYShell] Python TTY shell escape from https://netsec.ws/?p=337"
         self.opts.description += "\nModule author: Nong Hoang Tu <dmknght@parrotsec.org>"
 
+
     def make_shell(self):
         self.shell = f"""{self.args.type} -c 'import pty; pty.spawn("{self.args.shell}")'"""
 
