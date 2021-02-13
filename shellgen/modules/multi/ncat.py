@@ -94,6 +94,7 @@ class BindUDP(BindTCP):
         self.is_udp = True
 
     def make_shell(self):
+        self.shell = f"{self.args.type} "
         if self.args.type == "ncat":
             self.shell += f"-e {self.args.shell} -lup {self.args.port}"
         else:
