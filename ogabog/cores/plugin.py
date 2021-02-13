@@ -231,7 +231,10 @@ class BindShell(Module):
         :return:
         """
         from ogabog.cores import handler
-        listen_addr = self.args.lhost if self.args.lhost else self.args.ip
+        listen_addr = self.args.lhost
+        if not listen_addr:
+            print("[x] Need --lhost to start listener")
+            return
         listen_port = self.args.lport if self.args.lport else self.args.port
 
         if self.is_udp:
