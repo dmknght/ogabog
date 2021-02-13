@@ -11,6 +11,7 @@ class Module(object):
         self.module_name = ""
         self.class_name = ""
         self.extension = ""
+        self.file_only = False
 
     def add_args(self, *args, **kwargs):
         """
@@ -121,7 +122,8 @@ class Module(object):
                 f.close()
                 print(f"[+] New shell at {write_path}")
             else:
-                print(self.shell)
+                if not self.file_only:
+                    print(self.shell)
         except PermissionError:
             print(f"[x] Failed to write file at {write_path}: Permission Denied")
         except AttributeError:
