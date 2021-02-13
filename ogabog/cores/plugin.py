@@ -92,7 +92,7 @@ class Module(object):
             default="/tmp/outfile",
             const="",
             help="Set save file path",
-            required=False,
+            required=self.file_only,
         )
 
     def run(self):
