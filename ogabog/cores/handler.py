@@ -115,7 +115,6 @@ def reverse_udp(ip, port, module_name, class_name, timeout):
     svr.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
     try:
         svr.bind((ip, int(port)))
-        svr.listen(1)  # TODO listen more?
         print(f"Waiting for connection at {ip}:{port}")
     except Exception as error:
         print("[x] Error while create listener")
@@ -123,7 +122,7 @@ def reverse_udp(ip, port, module_name, class_name, timeout):
         return
 
     try:
-        client, client_addr = svr.accept()
+        client, client_addr = svr.recvfrom(1024)
         client.settimeout(timeout)
         print(f"Connected from {client_addr}")
 
