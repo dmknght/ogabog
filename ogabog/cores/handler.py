@@ -155,8 +155,6 @@ def bind_udp(ip, port, module_name, class_name, timeout):
         interpreter(cmd_prompt, sock_send, sock_recv)
     except Exception as error:
         print(f"[x] Error while connect to {ip}:{port}\n{error}")
-    except KeyboardInterrupt:
-        print("[*] Cancelled by user!")
     finally:
         client.close()
 
@@ -171,8 +169,6 @@ def bind_tcp(ip, port, module_name, class_name, timeout):
         sock_recv = client.recv
         cmd_prompt = prompt(ip, port, module_name, class_name)
         interpreter(cmd_prompt, sock_send, sock_recv)
-    except KeyboardInterrupt:
-        print("[*] Cancelled by user!")
     except Exception as error:
         print(f"[x] Error while connect to {ip}:{port}\n{error}")
     finally:
