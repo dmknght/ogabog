@@ -123,7 +123,7 @@ class BindUDP(BindTCP):
     def __init__(self):
         super().__init__()
         self.is_udp = True
-        self.opts.description = "[BindShell][UDP] Generic shells from swisskyrepo/PayloadsAllTheThings. License MIT."
+        self.opts.description = "[BindShell][UDP] Python from swisskyrepo/PayloadsAllTheThings. License MIT."
 
     def make_shell(self):
         pass # TODO make Bind shell python UDP with pty & subprocess
