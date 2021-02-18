@@ -66,15 +66,6 @@ class Module(object):
         """
         pass
 
-    def make_shell_file(self):
-        """
-        Dummy make shell method for Base class
-        This module is used when users want to create
-        file and write to disk instead of output command
-        :return:
-        """
-        pass
-
     def handler(self):
         """
         Dummy handler of listener for Base class
@@ -109,8 +100,7 @@ class Module(object):
             # In some modules, --out flag will have default value
             # We try to figure it out did users want to write a file
             # or print output only
-            import sys
-            if "--out" in sys.argv:
+            if argutils.is_write_file():
                 write_path = self.args.out
                 if not write_path:
                     print("[!] Generating custom path")
