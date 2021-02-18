@@ -120,3 +120,10 @@ def core_args():
         help="Class of module"
     )
     return parser
+
+
+def is_write_file():
+    import sys
+    if "--out" in sys.argv:
+        return True
+    return False
