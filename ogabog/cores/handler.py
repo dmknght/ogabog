@@ -148,7 +148,7 @@ def bind_udp(ip, port, module_name, class_name, timeout):
     try:
         input(f"Press any key to start connect to {ip}:{port}... ")
         client.settimeout(timeout)
-        client.connect((ip, port))
+        client.connect((ip, int(port)))
         sock_send = client.sendall
         sock_recv = client.recv
         cmd_prompt = prompt(ip, port, module_name, class_name)
