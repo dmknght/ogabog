@@ -1,4 +1,4 @@
-from ogabog.cores import plugin, const
+from ogabog.cores import plugin  # , const
 
 
 class ReverseTCP(plugin.ReverseShell):
