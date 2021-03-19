@@ -104,12 +104,6 @@ def core_args():
     parser = ArgumentParser()
     group_core = parser.add_argument_group("Core")
     group_core.add_argument(
-        "-l",
-        action='store_true',
-        default=False,
-        help="List all modules"
-    )
-    group_core.add_argument(
         DEF_FLAG_MODULE,
         metavar='Module',
         help="Select module"
@@ -119,6 +113,33 @@ def core_args():
         metavar='Class',
         help="Class of module"
     )
+    group_search = parser.add_argument_group("Search")
+    group_search.add_argument(
+        "-l",
+        "--list",
+        action='store_true',
+        default=False,
+        help="List modules and classes"
+    )
+    group_search.add_argument(
+        "-e",
+        "--executable",
+        help="Filter by interpreter or executable"
+    )
+    group_search.add_argument(
+        "-a",
+        "--platform",
+        help="Filter by platform"
+    )
+    group_search.add_argument(
+        "-r",
+        "--protocol",
+        choices={"tcp", "udp"},
+        default=None,
+        help="Filter by protocol"
+    )
+    # TODO search keyword?
+
     return parser
 
 
