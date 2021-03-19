@@ -19,6 +19,7 @@ def start_module(un_args, module_name, class_name):
             module.init_name(module_name, class_name)
         except AttributeError:
             print(f"[x] Invalid class name {class_name} for module {module_name}")
+            return
         # Parse args from cli, pass into module's args check
         module.args = module.get_opts().parse_args(un_args)
         module.run()
@@ -62,7 +63,8 @@ def program_handler(modules, args):
             if module_name:
                 if not class_name:
                     print("[x] No class name provided! Please add \"-c <ClassName>\" from list of classes below")
-                    list_modules([module_name])
+                    from ogabog.cores import searcher
+                    searcher.list_modules(module_name)  # TODO fix here: print all classes
             else:
                 if class_name:
                     print("[x] No module name provided")
