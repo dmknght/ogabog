@@ -1,12 +1,11 @@
 # Control modules
-import os
 
 # This string is the place of cutting the module name and project location
 # All modules should be at folder "/module/" or bug happens
 MODULE_DIR = "/modules/"
 
 
-def start_module(un_args, module_name, class_name):
+def start_module(un_args, module_name, class_name, modules):
     try:
         import importlib
         module = importlib.import_module("modules." + module_name.replace("/", "."))
@@ -18,7 +17,12 @@ def start_module(un_args, module_name, class_name):
             module = getattr(module, class_name)()
             module.init_name(module_name, class_name)
         except AttributeError:
-            print(f"[x] Invalid class name {class_name} for module {module_name}")
+            from ogabog.cores import searcher
+            print(f"[x] Invalid class name \"{class_name}\" for module \"{module_name}\"")
+            from argparse import Namespace
+            platform, executable = module_name.split("/")
+            args = Namespace(platform=platform, executable=executable)
+            searcher.list_modules(modules.__path__[0], args)
             return
         # Parse args from cli, pass into module's args check
         module.args = module.get_opts().parse_args(un_args)
@@ -58,13 +62,16 @@ def program_handler(modules, args):
         module_name = usr_args.p
         class_name = usr_args.c
         if module_name and class_name:
-            start_module(un_args, module_name, class_name)
+            start_module(un_args, module_name, class_name, modules)
         else:
             if module_name:
                 if not class_name:
                     print("[x] No class name provided! Please add \"-c <ClassName>\" from list of classes below")
                     from ogabog.cores import searcher
-                    searcher.list_modules(module_name)  # TODO fix here: print all classes
+                    from argparse import Namespace
+                    platform, executable = module_name.split("/")
+                    args = Namespace(platform=platform, executable=executable)
+                    searcher.list_modules(modules.__path__[0], args)
             else:
                 if class_name:
                     print("[x] No module name provided")
