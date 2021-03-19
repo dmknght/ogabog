@@ -71,62 +71,8 @@ def index_modules(directory: str):
     return modules
 
 
-# def search(modules, keyword, args):
-#     # TODO filter for language / interpreter / execution
-#     """
-#     Completed: Platform filter
-#     :param modules:
-#     :param keyword:
-#     :param args:
-#     :return:
-#     """
-#     import_path = modules.__path__[0]
-#
-#     if args.platform:
-#         # If user defines platform, we set code from importlib
-#         import_path += "/" + args.platform
-#
-#     import importlib
-#     for module_name in index_modules(import_path):
-#         module = importlib.import_module("modules." + module_name)
-#         # if args.c:
-#         #     # If user define specific class, we use it to print
-#         #     module_attr = getattr(module, args.c)()
-#         #     print(module_attr)
-#         # else:
-#             # Else use for loop for everything
-#         for class_name, obj in module.__dict__.items():
-#             """
-#             Try filter class name by user
-#             1. If no class name: skip -> search all
-#             2. If class name:
-#                 a. If user's class name not in class name -> skip
-#                 b. If user's class name in class name, show
-#             """
-#             if args.c and args.c.lower() not in class_name.lower():
-#                 continue
-#             if isinstance(obj, type):
-#                 # TODO search class_name with keywords
-#                 # if class_name.lower()
-#                 # TODO search desc with keywords
-#                 desc = getattr(module, class_name)().get_opts().description
-# for module in index_modules(import_path):
-#     print(module)
-# module = importlib.import_module(import_path)
-# print(import_path)
-# if args.c:
-#     module = getattr(module, args.c)()
-# else:
-#     pass
-# print(getattr(module))
-# try:
-#     # module = getattr(module, class_name)()
-# except:
-#     pass
-# TODO handle no module path here
-
-
-def list_modules(import_path, args):
+def list_modules(import_path, args, keywords):
+    # TODO support search for description or class name. think about multiple keyword search
     if not import_path.endswith("/"):
         import_path += "/"
 

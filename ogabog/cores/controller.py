@@ -51,13 +51,16 @@ def program_handler(modules, args):
     usr_args, un_args = args.parse_known_args()
     if usr_args.list:
         from ogabog.cores import searcher
-        # TODO show error for wrong flags of listing
-        searcher.list_modules(modules.__path__[0], usr_args)
-    # elif usr_args.search:
-    #     # We do search with custom filter here
-    #     # un_args -> keywords
-    #     from ogabog.cores import searcher
-    #     searcher.search(modules, un_args, usr_args)
+        unknown_flags, keywords = [], []
+        for x in un_args:
+            if x.startswith("-"):
+                unknown_flags.append(x)
+            else:
+                keywords.append(x)
+        if unknown_flags:
+            print(f"[x] Invalid option {unknown_flags}")
+            return
+        searcher.list_modules(modules.__path__[0], usr_args, keywords)
     else:
         module_name = usr_args.p
         class_name = usr_args.c

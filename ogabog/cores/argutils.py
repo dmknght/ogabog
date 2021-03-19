@@ -122,23 +122,19 @@ def core_args():
         help="List modules and classes"
     )
     group_search.add_argument(
-        "-e",
         "--executable",
         help="Filter by interpreter or executable"
     )
     group_search.add_argument(
-        # "-a",
         "--platform",
         help="Filter by platform"
     )
     group_search.add_argument(
         "-v",
-        # "--type",
         choices={"tcp", "udp", "pty"},
         default=None,
         help="Filter by type / protocol"
     )
-    # TODO search keyword?
 
     return parser
 
