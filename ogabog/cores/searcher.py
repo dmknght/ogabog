@@ -12,10 +12,15 @@ def get_classes(module_name: str):
     try:
         import importlib
         module = importlib.import_module("modules." + module_name.replace("/", "."))
-        for key, obj in module.__dict__.items():
+        for class_name, obj in module.__dict__.items():
             if isinstance(obj, type):
-                desc = getattr(module, key)().get_opts().description
-                yield key, desc
+                desc = getattr(module, class_name)().get_opts().description
+                shell_type = ""
+                try:
+                    shell_type = getattr(module, class_name)().shell_type
+                except AttributeError:
+                    print(f"  [!] Class {class_name} has no attribute \"shell_type\"")
+                yield class_name, desc, shell_type
         del module
     except ModuleNotFoundError:
         print(f"Can't import module {module_name}")
@@ -134,10 +139,16 @@ def list_modules(import_path, args):
         if args.executable:
             if not module_name.endswith(args.executable):
                 continue
+        # FIXME when filter with proto, should not print and count
         print(module_name.replace(".", "/"))
         sz_modules += 1
         # https://stackoverflow.com/a/38228621
-        for class_name, desc in get_classes(module_name):
+        for class_name, desc, shell_type in get_classes(module_name):
+            # Check if class is UDP connect or TCP
+            # 1. Check if args.protocol == None -> No filter
+            # 2. If filter, compare shell_type (tcp, udp, pty)
+            if args.v and shell_type and shell_type != args.v:
+                continue
             try:
                 description = desc.split("\n")[0]
                 print(f"  {class_name}{' ': <{20 - len(class_name)}} {description}")

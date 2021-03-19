@@ -127,16 +127,16 @@ def core_args():
         help="Filter by interpreter or executable"
     )
     group_search.add_argument(
-        "-a",
+        # "-a",
         "--platform",
         help="Filter by platform"
     )
     group_search.add_argument(
-        "-r",
-        "--protocol",
-        choices={"tcp", "udp"},
+        "-v",
+        # "--type",
+        choices={"tcp", "udp", "pty"},
         default=None,
-        help="Filter by protocol"
+        help="Filter by type / protocol"
     )
     # TODO search keyword?
 

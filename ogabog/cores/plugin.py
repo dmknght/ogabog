@@ -162,7 +162,7 @@ class ReverseShell(Module):
             default=3,
             required=False
         )
-        self.is_udp = False
+        self.shell_type = ""
 
     def handler(self):
         """
@@ -173,7 +173,7 @@ class ReverseShell(Module):
         listen_addr = self.args.lhost if self.args.lhost else self.args.ip
         listen_port = self.args.lport if self.args.lport else self.args.port
 
-        if self.is_udp:
+        if self.shell_type == "udp":
             handler.reverse_udp(listen_addr, listen_port, self.module_name, self.class_name, self.args.timeout)
         else:
             handler.reverse_tcp(listen_addr, listen_port, self.module_name, self.class_name, self.args.timeout)
@@ -213,7 +213,7 @@ class BindShell(Module):
             default=3,
             required=False
         )
-        self.is_udp = False
+        self.shell_type = ""
 
     def handler(self):
         """
@@ -227,7 +227,7 @@ class BindShell(Module):
             return
         listen_port = self.args.lport if self.args.lport else self.args.port
 
-        if self.is_udp:
+        if self.shell_type == "udp":
             handler.bind_udp(listen_addr, listen_port, self.module_name, self.class_name, self.args.timeout)
         else:
             handler.bind_tcp(listen_addr, listen_port, self.module_name, self.class_name, self.args.timeout)

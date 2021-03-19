@@ -51,7 +51,7 @@ def program_handler(modules, args):
     usr_args, un_args = args.parse_known_args()
     if usr_args.list:
         from ogabog.cores import searcher
-        # modules = index_modules(modules.__path__[0])
+        # TODO show error for wrong flags of listing
         searcher.list_modules(modules.__path__[0], usr_args)
     # elif usr_args.search:
     #     # We do search with custom filter here

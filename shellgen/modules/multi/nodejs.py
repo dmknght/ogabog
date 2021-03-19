@@ -23,6 +23,7 @@ class ReverseTCP(plugin.ReverseShell):
         )
         self.opts.description = "[ReverseShell][TCP] NodeJS from swisskyrepo/PayloadsAllTheThings. License MIT."
         self.opts.description += "\nModule author: Nguyen Hoang Thanh <smith.nguyenhoangthanh@gmail.com>"
+        self.shell_type = "tcp"
 
     def make_shell(self):
         self.shell = f"""node -e "require('child_process').{self.args.exec}"""
