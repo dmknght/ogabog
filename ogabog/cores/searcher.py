@@ -129,19 +129,19 @@ def index_modules(directory: str):
 def list_modules(import_path, args):
     if not import_path.endswith("/"):
         import_path += "/"
-    sz_modules = 0
-    sz_classes = 0
+
     if args.platform:
         # If user defines platform, we set code from importlib
         import_path += args.platform
+
+    sz_modules, sz_classes = 0, 0
 
     for module_name in index_modules(import_path):
         if args.executable:
             if not module_name.endswith(args.executable):
                 continue
-        # FIXME when filter with proto, should not print and count
-        print(module_name.replace(".", "/"))
-        sz_modules += 1
+
+        show_classes = []
         # https://stackoverflow.com/a/38228621
         for class_name, desc, shell_type in get_classes(module_name):
             # Check if class is UDP connect or TCP
@@ -151,8 +151,14 @@ def list_modules(import_path, args):
                 continue
             try:
                 description = desc.split("\n")[0]
-                print(f"  {class_name}{' ': <{20 - len(class_name)}} {description}")
+                show_classes.append(f"  {class_name}{' ': <{20 - len(class_name)}} {description}")
                 sz_classes += 1
             except ValueError:
-                print(f"  {class_name}{' ': <{20 - len(class_name)}} {desc}")
+                show_classes.append(f"  {class_name}{' ': <{20 - len(class_name)}} {desc}")
+                sz_classes += 1
+        if show_classes:
+            sz_modules += 1
+            print(module_name.replace(".", "/"))
+            print("\n".join(show_classes))
+
     print(f"\nTotal: {sz_classes} class[es] of {sz_modules} module[s]")
