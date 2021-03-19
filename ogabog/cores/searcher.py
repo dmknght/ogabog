@@ -3,7 +3,7 @@ import os
 MODULE_DIR = "/modules/"
 
 
-def list_classes(module_name: str):
+def get_classes(module_name: str):
     """
     List all classes in the module with the description
     :param module_name: name of module to show
@@ -64,32 +64,6 @@ def index_modules(directory: str):
         files = filter(lambda x: not x.startswith("__") and x.endswith(".py"), files)
         modules.extend(map(lambda x: ".".join((root, os.path.splitext(x)[0])), files))
     return modules
-
-
-# def list_modules(modules: list):
-#     """
-#     Show all modules and classes inside each module
-#     :param modules: list of all modules
-#     :return:
-#     """
-#     sz_modules = 0
-#     sz_classes = 0
-#
-#     for module in modules:
-#         sz_modules += 1
-#         print(module.replace(".", "/"))
-#         for class_name, desc in list_classes(module):
-#             sz_classes += 1
-#             # https://stackoverflow.com/a/38228621
-#             try:
-#                 description = desc.split("\n")[0]
-#                 print(f"  {class_name}{' ': <{20 - len(class_name)}} {description}")
-#             except ValueError:
-#                 print(f"  {class_name}{' ': <{20 - len(class_name)}} {desc}")
-#     if sz_modules == 1:
-#         print(f"\nTotal: class[es] {sz_classes}")
-#     else:
-#         print(f"\nTotal: {sz_classes} classes of {sz_modules} modules")
 
 
 # def search(modules, keyword, args):
@@ -162,7 +136,8 @@ def list_modules(import_path, args):
                 continue
         print(module_name.replace(".", "/"))
         sz_modules += 1
-        for class_name, desc in list_classes(module_name):
+        # https://stackoverflow.com/a/38228621
+        for class_name, desc in get_classes(module_name):
             try:
                 description = desc.split("\n")[0]
                 print(f"  {class_name}{' ': <{20 - len(class_name)}} {description}")
