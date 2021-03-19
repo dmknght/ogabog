@@ -148,11 +148,13 @@ def index_modules(directory: str):
 
 
 def list_modules(import_path, args):
+    if not import_path.endswith("/"):
+        import_path += "/"
     sz_modules = 0
     sz_classes = 0
     if args.platform:
         # If user defines platform, we set code from importlib
-        import_path += "/" + args.platform
+        import_path += args.platform
 
     for module_name in index_modules(import_path):
         if args.executable:
