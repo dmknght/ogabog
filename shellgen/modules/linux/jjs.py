@@ -6,7 +6,7 @@ class PTY(plugin.Module):
         super().__init__()
         self.add_args(
             "--shell",
-            default="sh",
+            default="bash",
             choices=const.LINUX_SHELL,
             help="Select shell type on target machine"
         )
