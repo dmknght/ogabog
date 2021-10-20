@@ -71,7 +71,7 @@ def index_modules(directory: str):
     return modules
 
 
-def list_modules(import_path, args, keywords):
+def list_modules(import_path, args, keywords=""):
     # TODO support search for description or class name. think about multiple keyword search
     if not import_path.endswith("/"):
         import_path += "/"
@@ -93,8 +93,8 @@ def list_modules(import_path, args, keywords):
             # Check if class is UDP connect or TCP
             # 1. Check if args.protocol == None -> No filter
             # 2. If filter, compare shell_type (tcp, udp, pty)
-            if args.v and shell_type and shell_type != args.v:
-                continue
+            # if args.v and shell_type and shell_type != args.v:
+            #     continue
             try:
                 description = desc.split("\n")[0]
                 show_classes.append(f"  {class_name}{' ': <{20 - len(class_name)}} {description}")
