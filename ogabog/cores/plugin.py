@@ -66,12 +66,12 @@ class Module(object):
         """
         pass
 
-    def handler(self):
-        """
-        Dummy handler of listener for Base class
-        :return:
-        """
-        pass
+    # def handler(self):
+    #     """
+    #     Dummy handler of listener for Base class
+    #     :return:
+    #     """
+    #     pass
 
     def set_write_file(self):
         # Allow user to provide --out without the full path
@@ -119,8 +119,8 @@ class Module(object):
         except AttributeError:
             print(self.shell)
 
-        if self.args.listen:
-            self.handler()
+        # if self.args.listen:
+        #     self.handler()
 
 
 class ReverseShell(Module):
@@ -136,11 +136,11 @@ class ReverseShell(Module):
             help="Port address",
             required=True
         )
-        self.add_args(
-            "--listen",
-            action='store_true',
-            help="Create listener",
-        )
+        # self.add_args(
+        #     "--listen",
+        #     action='store_true',
+        #     help="Create listener",
+        # )
         self.group_handler = self.opts.add_argument_group("Handler arguments")
         self.group_handler.add_argument(
             "--lhost",
@@ -164,19 +164,19 @@ class ReverseShell(Module):
         )
         self.shell_type = ""
 
-    def handler(self):
-        """
-        Create reverse shell handler
-        :return:
-        """
-        from ogabog.cores import handler
-        listen_addr = self.args.lhost if self.args.lhost else self.args.ip
-        listen_port = self.args.lport if self.args.lport else self.args.port
-
-        if self.shell_type == "udp":
-            handler.reverse_udp(listen_addr, listen_port, self.module_name, self.class_name, self.args.timeout)
-        else:
-            handler.reverse_tcp(listen_addr, listen_port, self.module_name, self.class_name, self.args.timeout)
+    # def handler(self):
+    #     """
+    #     Create reverse shell handler
+    #     :return:
+    #     """
+    #     from ogabog.cores import handler
+    #     listen_addr = self.args.lhost if self.args.lhost else self.args.ip
+    #     listen_port = self.args.lport if self.args.lport else self.args.port
+    #
+    #     if self.shell_type == "udp":
+    #         handler.reverse_udp(listen_addr, listen_port, self.module_name, self.class_name, self.args.timeout)
+    #     else:
+    #         handler.reverse_tcp(listen_addr, listen_port, self.module_name, self.class_name, self.args.timeout)
 
 
 class BindShell(Module):
@@ -215,19 +215,19 @@ class BindShell(Module):
         )
         self.shell_type = ""
 
-    def handler(self):
-        """
-        Create reverse shell handler
-        :return:
-        """
-        from ogabog.cores import handler
-        listen_addr = self.args.lhost
-        if not listen_addr:
-            print("[x] Need --lhost to start listener")
-            return
-        listen_port = self.args.lport if self.args.lport else self.args.port
-
-        if self.shell_type == "udp":
-            handler.bind_udp(listen_addr, listen_port, self.module_name, self.class_name, self.args.timeout)
-        else:
-            handler.bind_tcp(listen_addr, listen_port, self.module_name, self.class_name, self.args.timeout)
+    # def handler(self):
+    #     """
+    #     Create reverse shell handler
+    #     :return:
+    #     """
+    #     from ogabog.cores import handler
+    #     listen_addr = self.args.lhost
+    #     if not listen_addr:
+    #         print("[x] Need --lhost to start listener")
+    #         return
+    #     listen_port = self.args.lport if self.args.lport else self.args.port
+    #
+    #     if self.shell_type == "udp":
+    #         handler.bind_udp(listen_addr, listen_port, self.module_name, self.class_name, self.args.timeout)
+    #     else:
+    #         handler.bind_tcp(listen_addr, listen_port, self.module_name, self.class_name, self.args.timeout)
