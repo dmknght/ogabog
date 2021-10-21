@@ -1,4 +1,5 @@
 import os
+from ogabog.cores.print_utils import *
 
 MODULE_DIR = "/modules/"
 
@@ -14,13 +15,17 @@ def get_classes(module_name: str):
         module = importlib.import_module("modules." + module_name.replace("/", "."))
         for class_name, obj in module.__dict__.items():
             if isinstance(obj, type):
-                desc = getattr(module, class_name)().get_opts().description
-                shell_type = ""
+                shell_type, is_interactive = 0, False
                 try:
-                    shell_type = getattr(module, class_name)().protocol
+                    shell_type = getattr(module, class_name)().shell_type
+                    is_interactive = getattr(module, class_name)().is_interactive
                 except AttributeError:
                     print(f"  [!] Class {class_name} has no attribute \"shell_type\"")
-                yield class_name, desc, shell_type
+                try:
+                    is_interactive = getattr(module, class_name)().is_interactive
+                except AttributeError:
+                    print(f"  [!] Class {class_name} has no attribute \"is_interactive\"")
+                yield class_name, shell_type, is_interactive
         del module
     except ModuleNotFoundError:
         print(f"Can't import module {module_name}")
@@ -89,19 +94,27 @@ def list_modules(import_path, args, keywords=""):
 
         show_classes = []
         # https://stackoverflow.com/a/38228621
-        for class_name, desc, shell_type in get_classes(module_name):
+        header = ("Class", "Descriptions")
+        descriptions = []
+        print(module_name)
+        for class_name, shell_type, is_interactive in get_classes(module_name):
             # Check if class is UDP connect or TCP
             # 1. Check if args.protocol == None -> No filter
             # 2. If filter, compare shell_type (tcp, udp, pty)
             # if args.v and shell_type and shell_type != args.v:
             #     continue
-            try:
-                description = desc.split("\n")[0]
-                show_classes.append(f"  {class_name}{' ': <{20 - len(class_name)}} {description}")
-                sz_classes += 1
-            except ValueError:
-                show_classes.append(f"  {class_name}{' ': <{20 - len(class_name)}} {desc}")
-                sz_classes += 1
+            desc = ""
+            if shell_type == 0:
+                desc = color_bright_red("System-Shell")
+            elif shell_type == 1:
+                desc = color_bright_cyan("Reverse-Shell")
+            elif shell_type == 2:
+                desc = color_cyan("Bind-Shell")
+            desc += " " + color_bright_magenta("Interactive") if is_interactive else color_magenta("Non-Interactive")
+            # descriptions += (class_name, desc)
+            descriptions.append((class_name, desc))
+        print_table(header, *descriptions)
+
         if show_classes:
             sz_modules += 1
             print(module_name.replace(".", "/"))
