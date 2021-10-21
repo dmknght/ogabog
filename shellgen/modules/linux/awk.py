@@ -1,4 +1,4 @@
-from ogabog.cores import plugin  # , const
+from ogabog.cores import plugin, const
 
 
 class ReverseTCP(plugin.ReverseShell):
@@ -24,3 +24,20 @@ class ReverseUDP(ReverseTCP):
         super().__init__()
         self.shell_type = "udp"
         self.opts.description = "[ReverseShell][UDP] Generic shells from swisskyrepo/PayloadsAllTheThings. License MIT."
+
+
+class PTY(plugin.Module):
+    def __init__(self):
+        super().__init__()
+        self.add_args(
+            "--shell",
+            default="bash",
+            choices=const.LINUX_SHELL,
+            help="Select shell type on target machine"
+        )
+        self.opts.description = "[PTYShell] awk PTY shell escape. https://gtfobins.github.io/gtfobins/awk/"
+        self.opts.description += "\nModule author: Nong Hoang Tu <dmknght@parrotsec.org>"
+        self.shell_type = "pty"
+
+    def make_shell(self):
+        self.shell = "awk 'BEGIN {system(\"" + self.args.shell + "\")}'"
