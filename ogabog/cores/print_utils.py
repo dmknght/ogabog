@@ -66,7 +66,7 @@ def print_table(headers, *args, **kwargs):
 
     def custom_len(text: str):
         try:
-            return len(text) - 18 if "\x1b" in text else len(text)
+            return len(text) - (4 * text.count("\x1b") + 1)
         except TypeError:
             return 0
 
@@ -109,7 +109,7 @@ def print_table(headers, *args, **kwargs):
             content_line = "%s%s" % (
                 "".join((
                     content_line,
-                    '{:{}}'.format(element, fill[idx] + 18 if "\x1b" in element else fill[idx])
+                    '{:{}}'.format(element, fill[idx] + int(4.5 * element.count("\x1b")))
                 )),
                 "|  "
             )
