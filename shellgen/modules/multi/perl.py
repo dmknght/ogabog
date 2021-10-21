@@ -10,7 +10,8 @@ class ReverseTCP(plugin.ReverseShell):
             choices=const.LINUX_SHELL,
             help="Select shell type on target machine"
         )
-
+        self.shell_type = 2
+        self.is_interactive = True
         self.opts.description = "[ReverseShell][TCP] Perl from swisskyrepo/PayloadsAllTheThings. License MIT."
         self.opts.description += "\nModule author: Nguyen Hoang Thanh <smith.nguyenhoangthanh@gmail.com>"
         self.protocol = "tcp"
@@ -79,7 +80,7 @@ class BindUDP(BindTCP):
     def __init__(self):
         super().__init__()
         self.opts.description = "[BindShell][UDP] Perl from swisskyrepo/PayloadsAllTheThings. License MIT."
-        self.shell_type = "udp"
+        self.protocol = "udp"
 
     def make_shell(self):
         pass # TODO make bind shell UDP for Perl
