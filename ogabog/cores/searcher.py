@@ -94,7 +94,8 @@ def list_modules(import_path, args, keywords=""):
         # show_classes = []
         # https://stackoverflow.com/a/38228621
 
-        for class_name, shell_type, is_interactive in get_classes(module_name):
+        for idx, (class_name, shell_type, is_interactive) in enumerate(get_classes(module_name)):
+            help_module_name = color_bright_white(module_name.replace(".", "/"))
             desc = color_bright_magenta("Interactive") if is_interactive else color_magenta("Non-Interactive")
             desc += " "
             if shell_type == 0:
@@ -103,6 +104,6 @@ def list_modules(import_path, args, keywords=""):
                 desc += color_bright_cyan("Reverse-Shell")
             elif shell_type == 2:
                 desc += color_cyan("Bind-Shell")
-            descriptions += ((module_name.replace(".", "/"), class_name, desc), )
+            descriptions += ((help_module_name, class_name, desc), ) if idx == 0 else (("", class_name, desc), )
 
     print_table(header, *descriptions)

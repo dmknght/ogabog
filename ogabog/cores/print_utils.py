@@ -100,12 +100,14 @@ def print_table(headers, *args, **kwargs):
     # End of crafting header
 
     # Print header
-    print("%s\n%s\n%s" % (headers_separator_line, headers_line, headers_separator_line))
+    print(f"{headers_separator_line}\n{headers_line}")
 
     # Print contents
     for arg in args:
         content_line = '  |  '  # print first character before contents
         for idx, element in enumerate(arg):
+            if idx == 0 and element != "":
+                print(headers_separator_line)
             content_line = "%s%s" % (
                 "".join((
                     content_line,
