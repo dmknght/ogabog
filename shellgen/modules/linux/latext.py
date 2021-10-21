@@ -16,5 +16,4 @@ class PTY(plugin.Module):
 
     def make_shell(self):
         self.shell = "latex --shell-escape '\\documentclass{article}\\begin{document}\\immediate\\write18{"
-        self.shell += self.args.shell
-        self.shell += "}\\end{document}'"
+        self.shell += self.args.shell + "}\\end{document}'"

@@ -16,5 +16,4 @@ class PTY(plugin.Module):
 
     def make_shell(self):
         self.shell = "lualatex -shell-escape '\\documentclass{article}\\begin{document}\\directlua{"
-        self.shell += f"os.execute(\"{self.args.shell}\")"
-        self.shell += "}\\end{document}'"
+        self.shell += f"os.execute(\"{self.args.shell}\")" + "}\\end{document}'"
