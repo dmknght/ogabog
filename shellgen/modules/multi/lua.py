@@ -20,7 +20,9 @@ class ReverseTCP(plugin.ReverseShell):
         )
         self.opts.description = "[ReverseShell][TCP] Lua from swisskyrepo/PayloadsAllTheThings. License MIT."
         self.opts.description += "\nModule author: Nguyen Hoang Thanh <smith.nguyenhoangthanh@gmail.com>"
-        self.shell_type = "tcp"
+        self.shell_type = 1
+        self.is_interactive = True
+        self.protocol = "tcp"
 
     def make_shell(self):
         if self.args.exec == "os.execute":

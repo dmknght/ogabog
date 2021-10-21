@@ -17,7 +17,7 @@ def get_classes(module_name: str):
                 desc = getattr(module, class_name)().get_opts().description
                 shell_type = ""
                 try:
-                    shell_type = getattr(module, class_name)().shell_type
+                    shell_type = getattr(module, class_name)().protocol
                 except AttributeError:
                     print(f"  [!] Class {class_name} has no attribute \"shell_type\"")
                 yield class_name, desc, shell_type

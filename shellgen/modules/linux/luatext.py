@@ -1,7 +1,7 @@
 from ogabog.cores import plugin, const
 
 
-class PTY(plugin.Module):
+class PTY(plugin.BaseShell):
     def __init__(self):
         super().__init__()
         self.add_args(
@@ -12,7 +12,8 @@ class PTY(plugin.Module):
         )
         self.opts.description = "[Interactive][SystemShell] https://gtfobins.github.io/gtfobins/luatex/"
         self.opts.description += "\nModule author: Nong Hoang Tu <dmknght@parrotsec.org>"
-        self.shell_type = "pty"
+        self.shell_type = 0
+        self.is_interactive = True
 
     def make_shell(self):
         self.shell = "luatex -shell-escape '\\directlua{os.execute(\""

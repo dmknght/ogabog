@@ -30,7 +30,9 @@ class ReverseTCP(plugin.ReverseShell):
         )
         self.opts.description = "[ReverseShell][TCP] Netcat from swisskyrepo/PayloadsAllTheThings. License MIT."
         self.opts.description += "\nModule author: Nong Hoang Tu <dmknght@parrotsec.org>"
-        self.shell_type = "tcp"
+        self.protocol = "tcp"
+        self.shell_type = 1
+        self.is_interactive = True
 
     def make_shell(self):
         self.shell = f"{self.args.type} "
@@ -44,7 +46,9 @@ class ReverseTCP(plugin.ReverseShell):
 class ReverseUDP(ReverseTCP):
     def __init__(self):
         super().__init__()
-        self.shell_type = "udp"
+        self.shell_type = 2
+        self.is_interactive = True
+        self.protocol = "udp"
         self.opts.description = "[ReverseShell][UDP] Netcat from swisskyrepo/PayloadsAllTheThings. License MIT."
 
     def make_shell(self):
@@ -78,7 +82,9 @@ class BindTCP(plugin.BindShell):
         )
         self.opts.description = "[BindShell][TCP] Netcat from swisskyrepo/PayloadsAllTheThings. License MIT."
         self.opts.description += "\nModule author: Nong Hoang Tu <dmknght@parrotsec.org>"
-        self.shell_type = "tcp"
+        self.shell_type = 2
+        self.is_interactive = True
+        self.protocol = "tcp"
 
     def make_shell(self):
         self.shell = f"{self.args.type} "
@@ -93,7 +99,7 @@ class BindUDP(BindTCP):
     def __init__(self):
         super().__init__()
         self.opts.description = "[BindShell][UDP] Netcat from swisskyrepo/PayloadsAllTheThings. License MIT."
-        self.shell_type = "udp"
+        self.protocol = "udp"
 
     def make_shell(self):
         self.shell = f"{self.args.type} "

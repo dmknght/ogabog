@@ -1,12 +1,20 @@
 from ogabog.cores import argutils
 
 
-class Module(object):
+class BaseShell(object):
     def __init__(self):
         self.opts = argutils.PluginArgumentParser()
         self.core_module = self.opts.add_argument_group("Framework arguments")
         self.group_module = self.opts.add_argument_group("Module arguments")
         self.args = None
+        self.is_interactive = False
+        """
+        Shell type:
+        0. system shell / command
+        1. reverse shell
+        2. bind shell
+        """
+        self.protocol = 0
         self.shell = ""
         self.module_name = ""
         self.class_name = ""
@@ -123,7 +131,7 @@ class Module(object):
         #     self.handler()
 
 
-class ReverseShell(Module):
+class ReverseShell(BaseShell):
     def __init__(self):
         super().__init__()
         self.add_args(
@@ -162,7 +170,7 @@ class ReverseShell(Module):
             default=3,
             required=False
         )
-        self.shell_type = ""
+        self.protocol = ""
 
     # def handler(self):
     #     """
@@ -179,7 +187,7 @@ class ReverseShell(Module):
     #         handler.reverse_tcp(listen_addr, listen_port, self.module_name, self.class_name, self.args.timeout)
 
 
-class BindShell(Module):
+class BindShell(BaseShell):
     def __init__(self):
         super().__init__()
         self.add_args(
@@ -213,7 +221,7 @@ class BindShell(Module):
             default=3,
             required=False
         )
-        self.shell_type = ""
+        self.protocol = ""
 
     # def handler(self):
     #     """

