@@ -86,8 +86,6 @@ def list_modules(import_path, args, keywords=""):
         # If user defines platform, we set code from importlib
         import_path += args.platform
 
-    # sz_modules, sz_classes = 0, 0
-
     for module_name in index_modules(import_path):
         if args.executable:
             if not module_name.endswith(args.executable):
@@ -97,12 +95,6 @@ def list_modules(import_path, args, keywords=""):
         # https://stackoverflow.com/a/38228621
 
         for class_name, shell_type, is_interactive in get_classes(module_name):
-            # Check if class is UDP connect or TCP
-            # 1. Check if args.protocol == None -> No filter
-            # 2. If filter, compare shell_type (tcp, udp, pty)
-            # if args.v and shell_type and shell_type != args.v:
-            #     continue
-
             desc = color_bright_magenta("Interactive") if is_interactive else color_magenta("Non-Interactive")
             desc += " "
             if shell_type == 0:
@@ -111,13 +103,6 @@ def list_modules(import_path, args, keywords=""):
                 desc += color_bright_cyan("Reverse-Shell")
             elif shell_type == 2:
                 desc += color_cyan("Bind-Shell")
-            # descriptions.append((module_name, class_name, desc))
             descriptions += ((module_name.replace(".", "/"), class_name, desc), )
+
     print_table(header, *descriptions)
-
-        # if show_classes:
-        #     sz_modules += 1
-        #     print(module_name.replace(".", "/"))
-        #     print("\n".join(show_classes))
-
-    # print(f"\nTotal: {sz_classes} class[es] of {sz_modules} module[s]")
