@@ -64,9 +64,6 @@ def print_table(headers, *args, **kwargs):
     extra_fill = kwargs.get("extra_fill", 2)
     header_separator = kwargs.get("header_separator", "-")
 
-    # events.error("Error headers", "PrintTable")
-    # return False
-
     def custom_len(x):
         try:
             return len(x)
