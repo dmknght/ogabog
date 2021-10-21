@@ -77,26 +77,25 @@ def index_modules(directory: str):
 
 
 def list_modules(import_path, args, keywords=""):
+    header = ("Module", "Classes", "Descriptions")
+    descriptions = ()
     # TODO support search for description or class name. think about multiple keyword search
     if not import_path.endswith("/"):
         import_path += "/"
-
     if args.platform:
         # If user defines platform, we set code from importlib
         import_path += args.platform
 
-    sz_modules, sz_classes = 0, 0
+    # sz_modules, sz_classes = 0, 0
 
     for module_name in index_modules(import_path):
         if args.executable:
             if not module_name.endswith(args.executable):
                 continue
 
-        show_classes = []
+        # show_classes = []
         # https://stackoverflow.com/a/38228621
-        header = ("Class", "Descriptions")
-        descriptions = []
-        print(module_name)
+
         for class_name, shell_type, is_interactive in get_classes(module_name):
             # Check if class is UDP connect or TCP
             # 1. Check if args.protocol == None -> No filter
@@ -112,13 +111,13 @@ def list_modules(import_path, args, keywords=""):
                 desc += color_bright_cyan("Reverse-Shell")
             elif shell_type == 2:
                 desc += color_cyan("Bind-Shell")
-            # descriptions += (class_name, desc)
-            descriptions.append((class_name, desc))
-        print_table(header, *descriptions)
+            # descriptions.append((module_name, class_name, desc))
+            descriptions += ((module_name.replace(".", "/"), class_name, desc), )
+    print_table(header, *descriptions)
 
         # if show_classes:
         #     sz_modules += 1
         #     print(module_name.replace(".", "/"))
         #     print("\n".join(show_classes))
 
-    print(f"\nTotal: {sz_classes} class[es] of {sz_modules} module[s]")
+    # print(f"\nTotal: {sz_classes} class[es] of {sz_modules} module[s]")
