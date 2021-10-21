@@ -64,9 +64,9 @@ def print_table(headers, *args, **kwargs):
     extra_fill = kwargs.get("extra_fill", 2)
     header_separator = kwargs.get("header_separator", "-")
 
-    def custom_len(x):
+    def custom_len(text: str):
         try:
-            return len(x)
+            return len(text) - 18 if "\x1b" in text else len(text)
         except TypeError:
             return 0
 
@@ -109,7 +109,7 @@ def print_table(headers, *args, **kwargs):
             content_line = "%s%s" % (
                 "".join((
                     content_line,
-                    '{:{}}'.format(element, fill[idx])
+                    '{:{}}'.format(element, fill[idx] + 18 if "\x1b" in element else fill[idx])
                 )),
                 "|  "
             )
