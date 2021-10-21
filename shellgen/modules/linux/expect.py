@@ -10,7 +10,7 @@ class PTY(plugin.Module):
             choices=const.LINUX_SHELL,
             help="Select shell type on target machine"
         )
-        self.opts.description = "[PTYShell] Expect PTY shell escape. https://www.metahackers.pro/spawing-tty-shells/"
+        self.opts.description = "[Interactive][SystemShell] https://www.metahackers.pro/spawing-tty-shells/"
         self.opts.description += "\nModule author: Nong Hoang Tu <dmknght@parrotsec.org>"
         self.shell_type = "pty"
 

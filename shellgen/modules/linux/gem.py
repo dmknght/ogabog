@@ -10,7 +10,7 @@ class PTY(plugin.Module):
             choices=const.LINUX_SHELL,
             help="Select shell type on target machine"
         )
-        self.opts.description = "[PTYShell] Gem PTY shell escape. https://gtfobins.github.io/gtfobins/gem/"
+        self.opts.description = "[Interactive][SystemShell] https://gtfobins.github.io/gtfobins/gem/"
         self.opts.description += "\nModule author: Nong Hoang Tu <dmknght@parrotsec.org>"
         self.shell_type = "pty"
 
