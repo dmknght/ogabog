@@ -103,21 +103,22 @@ def list_modules(import_path, args, keywords=""):
             # 2. If filter, compare shell_type (tcp, udp, pty)
             # if args.v and shell_type and shell_type != args.v:
             #     continue
-            desc = ""
+
+            desc = color_bright_magenta("Interactive") if is_interactive else color_magenta("Non-Interactive")
+            desc += " "
             if shell_type == 0:
-                desc = color_bright_red("System-Shell")
+                desc += color_bright_red("System-Shell")
             elif shell_type == 1:
-                desc = color_bright_cyan("Reverse-Shell")
+                desc += color_bright_cyan("Reverse-Shell")
             elif shell_type == 2:
-                desc = color_cyan("Bind-Shell")
-            desc += " " + color_bright_magenta("Interactive") if is_interactive else color_magenta("Non-Interactive")
+                desc += color_cyan("Bind-Shell")
             # descriptions += (class_name, desc)
             descriptions.append((class_name, desc))
         print_table(header, *descriptions)
 
-        if show_classes:
-            sz_modules += 1
-            print(module_name.replace(".", "/"))
-            print("\n".join(show_classes))
+        # if show_classes:
+        #     sz_modules += 1
+        #     print(module_name.replace(".", "/"))
+        #     print("\n".join(show_classes))
 
     print(f"\nTotal: {sz_classes} class[es] of {sz_modules} module[s]")
