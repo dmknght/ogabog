@@ -68,6 +68,8 @@ class PTY(plugin.BaseShell):
             choices=const.LINUX_SHELL,
             help="Select shell type on target machine"
         )
+        self.shell_type = 0
+        self.is_interactive = True
         self.opts.description = "[PTYShell] Python PTY shell escape from https://netsec.ws/?p=337"
         self.opts.description += "\nModule author: Nong Hoang Tu <dmknght@parrotsec.org>"
 
