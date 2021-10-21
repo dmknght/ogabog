@@ -41,7 +41,6 @@ class PTY(plugin.BaseShell):
         )
         self.opts.description = "[Interactive][SystemShell] https://gtfobins.github.io/gtfobins/awk/"
         self.opts.description += "\nModule author: Nong Hoang Tu <dmknght@parrotsec.org>"
-        self.shell_type = "pty"
 
     def make_shell(self):
         # TODO add nawk

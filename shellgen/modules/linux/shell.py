@@ -30,5 +30,5 @@ class ReverseTCP(plugin.ReverseShell):
 class ReverseUDP(ReverseTCP):
     def __init__(self):
         super().__init__()
-        self.shell_type = "udp"
+        self.protocol = "udp"
         self.opts.description = "[ReverseShell][UDP] Generic shells from swisskyrepo/PayloadsAllTheThings. License MIT."

