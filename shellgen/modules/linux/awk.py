@@ -40,4 +40,5 @@ class PTY(plugin.Module):
         self.shell_type = "pty"
 
     def make_shell(self):
+        # TODO add nawk
         self.shell = "awk 'BEGIN {system(\"" + self.args.shell + "\")}'"
