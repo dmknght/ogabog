@@ -144,32 +144,6 @@ class ReverseShell(BaseShell):
             help="Port address",
             required=True
         )
-        # self.add_args(
-        #     "--listen",
-        #     action='store_true',
-        #     help="Create listener",
-        # )
-        self.group_handler = self.opts.add_argument_group("Handler arguments")
-        self.group_handler.add_argument(
-            "--lhost",
-            help="Listener's address",
-            metavar="IP",
-            required=False
-        )
-        self.group_handler.add_argument(
-            "--lport",
-            help="Listener's port",
-            metavar="Port",
-            required=False
-        )
-        self.group_handler.add_argument(
-            "--timeout",
-            help="Socket timeout",
-            metavar="Timeout",
-            type=int,
-            default=3,
-            required=False
-        )
         self.protocol = ""
 
     # def handler(self):
