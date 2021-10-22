@@ -31,6 +31,7 @@ class ReverseUDP(ReverseTCP):
     def __init__(self):
         super().__init__()
         self.protocol = "udp"
-        self.opts.description = "[ReverseShell][UDP] Generic shells from swisskyrepo/PayloadsAllTheThings. License MIT."
+        self.opts.description = "https://gtfobins.github.io/gtfobins/bash/"
+        self.opts.description += "\nModule author: Nong Hoang Tu <dmknght@parrotsec.org>"
         self.shell_type = 1
         self.is_interactive = True

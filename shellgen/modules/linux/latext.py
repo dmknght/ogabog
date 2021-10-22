@@ -10,7 +10,7 @@ class Shell(plugin.BaseShell):
             choices=const.LINUX_SHELL,
             help="Select shell type on target machine"
         )
-        self.opts.description = "[Interactive][SystemShell] https://gtfobins.github.io/gtfobins/latex/"
+        self.opts.description = "https://gtfobins.github.io/gtfobins/latex/"
         self.opts.description += "\nModule author: Nong Hoang Tu <dmknght@parrotsec.org>"
         self.shell_type = 0
         self.is_interactive = True
