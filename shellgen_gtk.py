@@ -50,8 +50,10 @@ class MainWindows(Gtk.Window):
             selected_class_name = combobox.get_model()[tree_iter][0]
             module_name = f"shellgen.modules.{self.current_module}"
             module = getattr(importlib.import_module(module_name), selected_class_name)()
-            # print(str(vars(module)).replace(", ", "\n"))
-            print(vars(module.module_args)["_group_actions"])
+            for module_args in vars(module.module_args)["_group_actions"]:
+                # The label to use
+                print(module_args.dest)
+                print(module_args.help)
 
     def do_update_list_platforms(self):
         for platform in all_modules.keys():
