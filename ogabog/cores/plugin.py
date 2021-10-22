@@ -1,4 +1,4 @@
-from ogabog.cores import argutils
+from ogabog.cores import argutils, print_utils
 
 
 class BaseShell(object):
@@ -122,14 +122,11 @@ class BaseShell(object):
                 print(f"[+] New shell at {write_path}")
             else:
                 if not self.file_only:
-                    print(self.shell)
+                    print(print_utils.color_bright_blue(self.shell))
         except PermissionError:
             print(f"[x] Failed to write file at {write_path}: Permission Denied")
         except AttributeError:
             print(self.shell)
-
-        # if self.args.listen:
-        #     self.handler()
 
 
 class ReverseShell(BaseShell):
@@ -146,20 +143,6 @@ class ReverseShell(BaseShell):
             required=True
         )
         self.protocol = ""
-
-    # def handler(self):
-    #     """
-    #     Create reverse shell handler
-    #     :return:
-    #     """
-    #     from ogabog.cores import handler
-    #     listen_addr = self.args.lhost if self.args.lhost else self.args.ip
-    #     listen_port = self.args.lport if self.args.lport else self.args.port
-    #
-    #     if self.shell_type == "udp":
-    #         handler.reverse_udp(listen_addr, listen_port, self.module_name, self.class_name, self.args.timeout)
-    #     else:
-    #         handler.reverse_tcp(listen_addr, listen_port, self.module_name, self.class_name, self.args.timeout)
 
 
 class BindShell(BaseShell):
@@ -197,20 +180,3 @@ class BindShell(BaseShell):
             required=False
         )
         self.protocol = ""
-
-    # def handler(self):
-    #     """
-    #     Create reverse shell handler
-    #     :return:
-    #     """
-    #     from ogabog.cores import handler
-    #     listen_addr = self.args.lhost
-    #     if not listen_addr:
-    #         print("[x] Need --lhost to start listener")
-    #         return
-    #     listen_port = self.args.lport if self.args.lport else self.args.port
-    #
-    #     if self.shell_type == "udp":
-    #         handler.bind_udp(listen_addr, listen_port, self.module_name, self.class_name, self.args.timeout)
-    #     else:
-    #         handler.bind_tcp(listen_addr, listen_port, self.module_name, self.class_name, self.args.timeout)
