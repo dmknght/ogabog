@@ -104,6 +104,8 @@ def list_modules(import_path, args, keywords=""):
                 desc += color_bright_cyan("Reverse-Shell")
             elif shell_type == 2:
                 desc += color_cyan("Bind-Shell")
+            elif shell_type == 4:
+                desc += color_red("Command")
             descriptions += ((help_module_name, class_name, desc), ) if idx == 0 else (("", class_name, desc), )
 
     print_table(header, *descriptions)
