@@ -4,8 +4,8 @@ from ogabog.cores import argutils
 class BaseShell(object):
     def __init__(self):
         self.opts = argutils.PluginArgumentParser()
-        self.core_module = self.opts.add_argument_group("Framework arguments")
-        self.group_module = self.opts.add_argument_group("Module arguments")
+        self.core_args = self.opts.add_argument_group("Framework arguments")
+        self.module_args = self.opts.add_argument_group("Module arguments")
         self.args = None
         self.is_interactive = False
         """
@@ -28,7 +28,7 @@ class BaseShell(object):
         :param kwargs:
         :return:
         """
-        self.group_module.add_argument(*args, **kwargs)
+        self.module_args.add_argument(*args, **kwargs)
 
     def get_opts(self):
         """
@@ -46,14 +46,14 @@ class BaseShell(object):
         :param class_name: name of current class
         :return:
         """
-        self.core_module.add_argument(
+        self.core_args.add_argument(
             "-p",
             metavar=module_name,
             default=module_name,
             help="Select module " + module_name,
             required=True
         )
-        self.core_module.add_argument(
+        self.core_args.add_argument(
             "-c",
             metavar=class_name,
             default=class_name,
