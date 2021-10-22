@@ -13,6 +13,7 @@ class BaseShell(object):
         0. system shell / command
         1. reverse shell
         2. bind shell
+        3. Command
         """
         self.shell_type = 0
         self.shell = ""
