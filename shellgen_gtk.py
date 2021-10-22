@@ -4,6 +4,7 @@ import gi
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk
 from shellgen.gui import cores
+import importlib
 
 all_modules = cores.get_all_modules()
 
@@ -17,6 +18,7 @@ class MainWindows(Gtk.Window):
         self.box_platforms = Gtk.ComboBox.new_with_model(self.list_platforms)
         self.box_module = Gtk.ComboBox.new_with_model(self.list_modules)
         self.box_class = Gtk.ComboBox.new_with_model(self.list_classes)
+        self.current_module = ""
 
         self.windows_box()
         self.show_all()
@@ -25,6 +27,7 @@ class MainWindows(Gtk.Window):
         tree_iter = combobox.get_active_iter()
         if tree_iter is not None:
             selected_text = combobox.get_model()[tree_iter][0]
+            self.current_module = selected_text
             self.list_modules.clear()
             self.list_classes.clear()
             for module in all_modules[selected_text].keys():
@@ -34,13 +37,20 @@ class MainWindows(Gtk.Window):
 
     def on_box_modules_changed(self, combobox):
         tree_iter = combobox.get_active_iter()
-        platform_tree_iter = self.box_platforms.get_active_iter()
-        platform_value = self.box_platforms.get_model()[platform_tree_iter][0]
         if tree_iter is not None:
             selected_text = combobox.get_model()[tree_iter][0]
             self.list_classes.clear()
-            for class_name in all_modules[platform_value][selected_text]:
+            for class_name in all_modules[self.current_module][selected_text]:
                 self.list_classes.append([class_name])
+            self.current_module += f".{selected_text}"
+
+    def on_box_class_changed(self, combobox):
+        tree_iter = combobox.get_active_iter()
+        if tree_iter is not None:
+            selected_class_name = combobox.get_model()[tree_iter][0]
+            module_name = f"shellgen.modules.{self.current_module}"
+            module = getattr(importlib.import_module(module_name), selected_class_name)()
+            print(vars(module))
 
     def do_update_list_platforms(self):
         for platform in all_modules.keys():
@@ -60,6 +70,7 @@ class MainWindows(Gtk.Window):
         self.do_update_list_platforms()
         self.box_platforms.connect("changed", self.on_box_platforms_changed)
         self.box_module.connect("changed", self.on_box_modules_changed)
+        self.box_class.connect("changed", self.on_box_class_changed)
 
         renderer_text = Gtk.CellRendererText()
         self.box_platforms.pack_start(renderer_text, True)
