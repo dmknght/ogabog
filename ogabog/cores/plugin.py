@@ -14,7 +14,7 @@ class BaseShell(object):
         1. reverse shell
         2. bind shell
         """
-        self.protocol = 0
+        self.shell_type = 0
         self.shell = ""
         self.module_name = ""
         self.class_name = ""
