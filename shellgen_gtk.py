@@ -40,9 +40,9 @@ class MainWindows(Gtk.Window):
         if tree_iter is not None:
             selected_text = combobox.get_model()[tree_iter][0]
             self.list_classes.clear()
-            for class_name in all_modules[self.current_module][selected_text]:
+            for class_name in all_modules[self.current_module.split('.')[0]][selected_text]:
                 self.list_classes.append([class_name])
-            self.current_module += f".{selected_text}"
+            self.current_module = f"{self.current_module.split('.')[0]}.{selected_text}"
 
     def on_box_class_changed(self, combobox):
         tree_iter = combobox.get_active_iter()
@@ -50,7 +50,8 @@ class MainWindows(Gtk.Window):
             selected_class_name = combobox.get_model()[tree_iter][0]
             module_name = f"shellgen.modules.{self.current_module}"
             module = getattr(importlib.import_module(module_name), selected_class_name)()
-            print(vars(module))
+            # print(str(vars(module)).replace(", ", "\n"))
+            print(vars(module.module_args)["_group_actions"])
 
     def do_update_list_platforms(self):
         for platform in all_modules.keys():
