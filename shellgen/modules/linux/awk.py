@@ -44,7 +44,7 @@ class PTY(plugin.BaseShell):
             "--command",
             default="awk",
             choices=["awk", "gawk", "nawk, mawk"],
-            help="Select shell type on target machine"
+            help="Select awk command on target machine"
         )
         self.opts.description = "https://gtfobins.github.io/gtfobins/awk/"
         self.opts.description += "\nModule author: Nong Hoang Tu <dmknght@parrotsec.org>"
