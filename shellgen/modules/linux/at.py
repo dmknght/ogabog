@@ -12,7 +12,7 @@ class Shell(plugin.BaseShell):
             choices=const.LINUX_SHELL,
             help="Select shell type on target machine"
         )
-        self.opts.description = "https://gtfobins.github.io/gtfobins/awk/"
+        self.opts.description = "https://gtfobins.github.io/gtfobins/at/"
         self.opts.description += "\nModule author: Nong Hoang Tu <dmknght@parrotsec.org>"
 
     def make_shell(self):
@@ -30,7 +30,7 @@ class Shell(plugin.BaseShell):
 #             help="Command to run on target machine"
 #         )
 #         # Blind command
-#         self.opts.description = "https://gtfobins.github.io/gtfobins/awk/"
+#         self.opts.description = "https://gtfobins.github.io/gtfobins/at/"
 #         self.opts.description += "\nModule author: Nong Hoang Tu <dmknght@parrotsec.org>"
 #
 #     def make_shell(self):
