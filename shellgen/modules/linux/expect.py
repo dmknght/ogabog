@@ -10,10 +10,10 @@ class PTY(plugin.BaseShell):
             choices=const.LINUX_SHELL,
             help="Select shell type on target machine"
         )
-        self.opts.description = "[Interactive][SystemShell] https://www.metahackers.pro/spawing-tty-shells/"
+        self.opts.description = "https://gtfobins.github.io/gtfobins/expect/"
         self.opts.description += "\nModule author: Nong Hoang Tu <dmknght@parrotsec.org>"
         self.shell_type = 0
         self.is_interactive = True
 
     def make_shell(self):
-        self.shell = f"""expect -c \"spawn {self.args.shell}; interact\""""
+        self.shell = f"expect -c \"spawn {self.args.shell}; interact\""
