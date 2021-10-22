@@ -46,7 +46,7 @@ class ReverseTCP(plugin.ReverseShell):
 class ReverseUDP(ReverseTCP):
     def __init__(self):
         super().__init__()
-        self.shell_type = 2
+        self.shell_type = 1
         self.is_interactive = True
         self.protocol = "udp"
         self.opts.description = "[ReverseShell][UDP] Netcat from swisskyrepo/PayloadsAllTheThings. License MIT."
@@ -100,6 +100,8 @@ class BindUDP(BindTCP):
         super().__init__()
         self.opts.description = "[BindShell][UDP] Netcat from swisskyrepo/PayloadsAllTheThings. License MIT."
         self.protocol = "udp"
+        self.shell_type = 2
+        self.is_interactive = True
 
     def make_shell(self):
         self.shell = f"{self.args.type} "
