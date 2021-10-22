@@ -1,7 +1,7 @@
 from ogabog.cores import plugin, const
 
 
-class PTY(plugin.BaseShell):
+class Shell(plugin.BaseShell):
     def __init__(self):
         super().__init__()
         self.add_args(

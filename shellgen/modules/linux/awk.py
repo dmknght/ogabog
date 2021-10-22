@@ -29,7 +29,7 @@ class ReverseUDP(ReverseTCP):
         self.opts.description += "\nModule author: Nong Hoang Tu <dmknght@parrotsec.org>"
 
 
-class PTY(plugin.BaseShell):
+class Shell(plugin.BaseShell):
     def __init__(self):
         super().__init__()
         self.shell_type = 0
