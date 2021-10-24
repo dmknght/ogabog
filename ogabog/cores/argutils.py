@@ -141,6 +141,12 @@ def core_args():
         help="Shell type",
         choices=["System-Shell", "Reverse-Shell", "Bind-Shell", "Command"]
     )
+    group_search.add_argument(
+        "--module-only",
+        help="Show only modules",
+        action='store_true',
+        default=False
+    )
     return parser
 
 
