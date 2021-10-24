@@ -129,6 +129,11 @@ def core_args():
         "--platform",
         help="Filter by platform"
     )
+    group_search.add_argument(
+        "--interactive",
+        help="Shell is Interactive?",
+        type=bool,
+    )
 
     return parser
 

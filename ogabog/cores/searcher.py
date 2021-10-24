@@ -95,17 +95,20 @@ def list_modules(import_path, args, keywords=""):
         # https://stackoverflow.com/a/38228621
 
         for idx, (class_name, shell_type, is_interactive) in enumerate(get_classes(module_name)):
-            help_module_name = color_bright_white(module_name.replace(".", "/"))
-            desc = color_bright_magenta("Interactive") if is_interactive else color_magenta("Non-Interactive")
-            desc += " "
-            if shell_type == 0:
-                desc += color_bright_red("System-Shell")
-            elif shell_type == 1:
-                desc += color_bright_cyan("Reverse-Shell")
-            elif shell_type == 2:
-                desc += color_cyan("Bind-Shell")
-            elif shell_type == 3:
-                desc += color_red("Command")
-            descriptions += ((help_module_name, class_name, desc), ) if idx == 0 else (("", class_name, desc), )
+            if args.interactive != None and args.interactive != is_interactive:
+                pass
+            else:
+                help_module_name = color_bright_white(module_name.replace(".", "/"))
+                desc = color_bright_magenta("Interactive") if is_interactive else color_magenta("Non-Interactive")
+                desc += " "
+                if shell_type == 0:
+                    desc += color_bright_red("System-Shell")
+                elif shell_type == 1:
+                    desc += color_bright_cyan("Reverse-Shell")
+                elif shell_type == 2:
+                    desc += color_cyan("Bind-Shell")
+                elif shell_type == 3:
+                    desc += color_red("Command")
+                descriptions += ((help_module_name, class_name, desc), ) if idx == 0 else (("", class_name, desc), )
 
     print_table(header, *descriptions)
