@@ -122,8 +122,8 @@ def core_args():
         help="List modules and classes"
     )
     group_search.add_argument(
-        "--executable",
-        help="Filter by interpreter or executable"
+        "--exec",
+        help="Filter by interpreter / command"
     )
     group_search.add_argument(
         "--platform",
