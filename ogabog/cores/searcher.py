@@ -101,7 +101,7 @@ def list_modules(import_path, args, keywords=""):
             # FIXME 1: Don't print table if no value is found
             if args.interactive != None and args.interactive != is_interactive:
                 pass
-            elif args.shell_type != None and SHELL_TYPE_TO_INT[args.shell_type] != shell_type:
+            elif args.shell_type and SHELL_TYPE_TO_INT[args.shell_type] != shell_type:
                 pass
             else:
                 help_module_name = color_bright_white(module_name.replace(".", "/"))
