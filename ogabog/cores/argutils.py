@@ -65,12 +65,12 @@ class ArgumentParser(argparse.ArgumentParser):
             else:
                 # Wrong module name
                 self._print_message(self.format_help(), file)
-                self._print_message(f"\nInvalid module name {module_name}")
+                self._print_message(f"\nInvalid module name {module_name} (ArgUtils)")
         except ValueError:
             self._print_message(self.format_help(), file)
         except ModuleNotFoundError:
             self._print_message(self.format_help(), file)
-            self._print_message(f"\nInvalid module name {module_name}")
+            self._print_message(f"\nInvalid module name {module_name} (ArgUtils)")
 
 
 class PluginArgumentParser(argparse.ArgumentParser):
