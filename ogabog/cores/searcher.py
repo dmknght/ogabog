@@ -78,7 +78,6 @@ def index_modules(directory: str):
 
 
 def do_filter_list(import_path, args):
-    # TODO list for 1 module only?
     descriptions = ()
     for module_name in index_modules(import_path):
         if args.executable:
