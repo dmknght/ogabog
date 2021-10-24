@@ -91,7 +91,7 @@ def do_filter_list(import_path, args):
         for idx, (class_name, shell_type, is_interactive) in enumerate(get_classes(module_name)):
             # Filter user search by interactive and shell type. Default value of namespace is None if
             # user didn't pass value
-            if args.interactive != None and args.interactive != is_interactive:
+            if args.interactive is not None and args.interactive != is_interactive:
                 pass
             elif args.shell_type and SHELL_TYPE_TO_INT[args.shell_type] != shell_type:
                 pass
@@ -107,8 +107,8 @@ def do_filter_list(import_path, args):
                     desc += color_cyan("Bind-Shell")
                 elif shell_type == 3:
                     desc += color_red("Command")
-                descriptions += ((help_module_name, class_name, desc), ) if \
-                    help_module_name not in [x[0] for x in descriptions] else (("", class_name, desc), )
+                descriptions += ((help_module_name, class_name, desc),) if \
+                    help_module_name not in [x[0] for x in descriptions] else (("", class_name, desc),)
     return descriptions
 
 
