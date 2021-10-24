@@ -129,12 +129,6 @@ def core_args():
         "--platform",
         help="Filter by platform"
     )
-    group_search.add_argument(
-        "-v",
-        choices={"tcp", "udp", "pty"},
-        default=None,
-        help="Filter by type / protocol"
-    )
 
     return parser
 
