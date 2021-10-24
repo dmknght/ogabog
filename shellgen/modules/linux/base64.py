@@ -2,7 +2,7 @@ from ogabog.cores import plugin
 import base64
 
 
-class FileRead(plugin.BaseShell):
+class ReadFile(plugin.BaseShell):
     def __init__(self):
         super().__init__()
         self.shell_type = 3
