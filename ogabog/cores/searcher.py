@@ -13,7 +13,7 @@ def get_classes(module_name: str):
     """
     try:
         import importlib
-        module = importlib.import_module("modules." + module_name.replace("/", "."))
+        module = importlib.import_module("shellgen.modules." + module_name.replace("/", "."))
         for class_name, obj in module.__dict__.items():
             if isinstance(obj, type):
                 shell_type, is_interactive = 0, False
@@ -29,7 +29,7 @@ def get_classes(module_name: str):
                 yield class_name, shell_type, is_interactive
         del module
     except ModuleNotFoundError:
-        print(f"Can't import module {module_name}")
+        print(f"(Searcher) Can't import module {module_name}")
 
 
 def index_modules(directory: str):

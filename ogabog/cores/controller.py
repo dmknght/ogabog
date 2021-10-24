@@ -8,7 +8,7 @@ MODULE_DIR = "/modules/"
 def start_module(un_args, module_name, class_name, modules):
     try:
         import importlib
-        module = importlib.import_module("modules." + module_name.replace("/", "."))
+        module = importlib.import_module("shellgen.modules." + module_name.replace("/", "."))
         # https://stackoverflow.com/a/41678146
         # Import class with importlib
         # https://stackoverflow.com/a/17534365
@@ -29,7 +29,7 @@ def start_module(un_args, module_name, class_name, modules):
         module.run()
 
     except ModuleNotFoundError:
-        print(f"[x] Invalid module name {module_name}")
+        print(f"[x] (Controller) Invalid module name {module_name}")
     except AttributeError:
         # Error msg was handled
         pass

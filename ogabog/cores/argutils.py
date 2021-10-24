@@ -37,7 +37,7 @@ class ArgumentParser(argparse.ArgumentParser):
                     pos = sys.argv.index(DEF_FLAG_CLASS)
                     class_name = sys.argv[pos + 1]
                     import importlib
-                    module = importlib.import_module("modules." + module_name.replace("/", "."))
+                    module = importlib.import_module("shellgen.modules." + module_name.replace("/", "."))
                     try:
                         module = getattr(module, class_name)()
                         print(f"Help module: {module_name}")
@@ -54,7 +54,7 @@ class ArgumentParser(argparse.ArgumentParser):
                 # New method to get all names of classes in module
                 # https://stackoverflow.com/a/21563930
                 import importlib
-                module = importlib.import_module("modules." + module_name.replace("/", "."))
+                module = importlib.import_module("shellgen.modules." + module_name.replace("/", "."))
                 print(f"Help module: {module_name}")
                 for key, obj in module.__dict__.items():
                     if isinstance(obj, type):
@@ -65,12 +65,12 @@ class ArgumentParser(argparse.ArgumentParser):
             else:
                 # Wrong module name
                 self._print_message(self.format_help(), file)
-                self._print_message(f"\nInvalid module name {module_name} (ArgUtils)")
+                self._print_message(f"\n(ArgUtils) Invalid module name {module_name}")
         except ValueError:
             self._print_message(self.format_help(), file)
         except ModuleNotFoundError:
             self._print_message(self.format_help(), file)
-            self._print_message(f"\nInvalid module name {module_name} (ArgUtils)")
+            self._print_message(f"\n(ArgUtils) Invalid module name {module_name}")
 
 
 class PluginArgumentParser(argparse.ArgumentParser):

@@ -1,5 +1,5 @@
 from ogabog.cores import argutils, controller
-import modules
+from shellgen import modules
 
 args = argutils.core_args()
 args.description = "Generate bind / reverse shell"
