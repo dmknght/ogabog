@@ -84,10 +84,6 @@ def do_filter_list(import_path, args):
         if args.executable:
             if not module_name.endswith(args.executable):
                 continue
-
-        # show_classes = []
-        # https://stackoverflow.com/a/38228621
-
         for idx, (class_name, shell_type, is_interactive) in enumerate(get_classes(module_name)):
             # Filter user search by interactive and shell type. Default value of namespace is None if
             # user didn't pass value
@@ -98,22 +94,13 @@ def do_filter_list(import_path, args):
             else:
                 help_module_name = color_bright_white(module_name.replace(".", "/"))
                 desc = color_bright_magenta("Interactive") if is_interactive else color_magenta("Non-Interactive")
-                desc += " "
-                if shell_type == 0:
-                    desc += color_bright_red("System-Shell")
-                elif shell_type == 1:
-                    desc += color_bright_cyan("Reverse-Shell")
-                elif shell_type == 2:
-                    desc += color_cyan("Bind-Shell")
-                elif shell_type == 3:
-                    desc += color_red("Command")
+                desc += f" {COLORED_SHELL_TYPE[shell_type]}"
                 descriptions += ((help_module_name, class_name, desc),) if \
                     help_module_name not in [x[0] for x in descriptions] else (("", class_name, desc),)
     return descriptions
 
 
 def list_modules(import_path, args, keywords=""):
-    header = ("Module", "Classes", "Descriptions")
     if not import_path.endswith("/"):
         import_path += "/"
     if args.platform:
@@ -121,8 +108,12 @@ def list_modules(import_path, args, keywords=""):
         import_path += args.platform
 
     descriptions = do_filter_list(import_path, args)
-
-    if descriptions:
-        print_table(header, *descriptions)
-    else:
+    if not descriptions:
         print("No results found")
+    else:
+        if args.module_only:
+            [print(x[0]) for x in descriptions if x[0]]
+        else:
+            header = ("Module", "Classes", "Descriptions")
+            if descriptions:
+                print_table(header, *descriptions)
