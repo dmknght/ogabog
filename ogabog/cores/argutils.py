@@ -132,7 +132,9 @@ def core_args():
     group_search.add_argument(
         "--interactive",
         help="Shell is Interactive?",
-        type=bool,
+        # Argument takes True / False value
+        # https://stackoverflow.com/a/46951029
+        type=lambda x: (str(x).lower() == 'true'),
     )
     group_search.add_argument(
         "--shell-type",

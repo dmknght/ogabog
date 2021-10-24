@@ -77,16 +77,9 @@ def index_modules(directory: str):
     return modules
 
 
-def list_modules(import_path, args, keywords=""):
-    header = ("Module", "Classes", "Descriptions")
+def do_filter_list(import_path, args):
+    # TODO list for 1 module only?
     descriptions = ()
-    # TODO support search for description or class name. think about multiple keyword search
-    if not import_path.endswith("/"):
-        import_path += "/"
-    if args.platform:
-        # If user defines platform, we set code from importlib
-        import_path += args.platform
-
     for module_name in index_modules(import_path):
         if args.executable:
             if not module_name.endswith(args.executable):
@@ -98,7 +91,6 @@ def list_modules(import_path, args, keywords=""):
         for idx, (class_name, shell_type, is_interactive) in enumerate(get_classes(module_name)):
             # Filter user search by interactive and shell type. Default value of namespace is None if
             # user didn't pass value
-            # FIXME 1: Don't print table if no value is found
             if args.interactive != None and args.interactive != is_interactive:
                 pass
             elif args.shell_type and SHELL_TYPE_TO_INT[args.shell_type] != shell_type:
@@ -117,5 +109,20 @@ def list_modules(import_path, args, keywords=""):
                     desc += color_red("Command")
                 descriptions += ((help_module_name, class_name, desc), ) if \
                     help_module_name not in [x[0] for x in descriptions] else (("", class_name, desc), )
+    return descriptions
 
-    print_table(header, *descriptions)
+
+def list_modules(import_path, args, keywords=""):
+    header = ("Module", "Classes", "Descriptions")
+    if not import_path.endswith("/"):
+        import_path += "/"
+    if args.platform:
+        # If user defines platform, we set code from importlib
+        import_path += args.platform
+
+    descriptions = do_filter_list(import_path, args)
+
+    if descriptions:
+        print_table(header, *descriptions)
+    else:
+        print("No results found")
