@@ -134,7 +134,11 @@ def core_args():
         help="Shell is Interactive?",
         type=bool,
     )
-
+    group_search.add_argument(
+        "--shell-type",
+        help="Shell type",
+        choices=["System-Shell", "Reverse-Shell", "Bind-Shell", "Command"]
+    )
     return parser
 
 

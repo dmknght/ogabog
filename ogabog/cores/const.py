@@ -10,3 +10,10 @@ LINUX_SHELL: list = [
     '/bin/pdksh',
     '/bin/tcsh'
 ]
+
+SHELL_TYPE_TO_INT = {
+    "System-Shell": 0,
+    "Reverse-Shell": 1,
+    "Bind-Shell": 2,
+    "Command": 3
+}

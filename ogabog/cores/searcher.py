@@ -1,4 +1,5 @@
 import os
+from ogabog.cores.const import *
 from ogabog.cores.print_utils import *
 
 MODULE_DIR = "/modules/"
@@ -95,7 +96,12 @@ def list_modules(import_path, args, keywords=""):
         # https://stackoverflow.com/a/38228621
 
         for idx, (class_name, shell_type, is_interactive) in enumerate(get_classes(module_name)):
+            # Filter user search by interactive and shell type. Default value of namespace is None if
+            # user didn't pass value
+            # FIXME 1: Don't print table if no value is found
             if args.interactive != None and args.interactive != is_interactive:
+                pass
+            elif args.shell_type != None and SHELL_TYPE_TO_INT[args.shell_type] != shell_type:
                 pass
             else:
                 help_module_name = color_bright_white(module_name.replace(".", "/"))
@@ -109,6 +115,7 @@ def list_modules(import_path, args, keywords=""):
                     desc += color_cyan("Bind-Shell")
                 elif shell_type == 3:
                     desc += color_red("Command")
-                descriptions += ((help_module_name, class_name, desc), ) if idx == 0 else (("", class_name, desc), )
+                descriptions += ((help_module_name, class_name, desc), ) if \
+                    help_module_name not in [x[0] for x in descriptions] else (("", class_name, desc), )
 
     print_table(header, *descriptions)
