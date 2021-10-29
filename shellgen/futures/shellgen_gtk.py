@@ -3,7 +3,7 @@
 import gi
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk
-from shellgen.gui import cores
+from shellgen.futures.gui import cores
 import importlib
 
 all_modules = cores.get_all_modules()
