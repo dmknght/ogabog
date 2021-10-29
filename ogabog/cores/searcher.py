@@ -80,8 +80,8 @@ def index_modules(directory: str):
 def do_filter_list(import_path, args):
     descriptions = ()
     for module_name in index_modules(import_path):
-        if args.executable:
-            if not module_name.endswith(args.executable):
+        if args.exec:
+            if not module_name.endswith(args.exec):
                 continue
         for idx, (class_name, shell_type, is_interactive) in enumerate(get_classes(module_name)):
             # Filter user search by interactive and shell type. Default value of namespace is None if
