@@ -11,7 +11,7 @@ class ReverseTCP(plugin.ReverseShell):
             help="Select shell type on target machine"
         )
         self.extension = "sh"
-        self.shell_type = 1
+        # self.shell_type = 1
         self.is_interactive = True
         self.protocol = "tcp"
         self.set_write_file()
@@ -33,5 +33,5 @@ class ReverseUDP(ReverseTCP):
         self.protocol = "udp"
         self.opts.description = "https://gtfobins.github.io/gtfobins/bash/"
         self.opts.description += "\nModule author: Nong Hoang Tu <dmknght@parrotsec.org>"
-        self.shell_type = 1
+        # self.shell_type = 1
         self.is_interactive = True

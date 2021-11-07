@@ -12,7 +12,7 @@ class Shell(plugin.BaseShell):
         )
         self.opts.description = "https://gtfobins.github.io/gtfobins/jrunscript/"
         self.opts.description += "\nModule author: Nong Hoang Tu <dmknght@parrotsec.org>"
-        self.shell_type = 0
+        # self.shell_type = 0
         self.is_interactive = True
 
     def make_shell(self):

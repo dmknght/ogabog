@@ -10,7 +10,7 @@ class ReverseTCP(plugin.ReverseShell):
             choices=const.LINUX_SHELL,
             help="Select shell type on target machine"
         )
-        self.shell_type = 1
+        # self.shell_type = 1
         self.is_interactive = True
         self.protocol = "tcp"
         self.opts.description = "[ReverseShell][TCP] Netcat from swisskyrepo/PayloadsAllTheThings. License MIT."

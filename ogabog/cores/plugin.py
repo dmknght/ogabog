@@ -15,7 +15,7 @@ class BaseShell(object):
         2. bind shell
         3. Command
         """
-        self.shell_type = 0
+        # self.shell_type = 0
         self.shell = ""
         self.module_name = ""
         self.class_name = ""

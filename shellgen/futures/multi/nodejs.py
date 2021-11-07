@@ -24,7 +24,7 @@ class ReverseTCP(plugin.ReverseShell):
         self.opts.description = "[ReverseShell][TCP] NodeJS from swisskyrepo/PayloadsAllTheThings. License MIT."
         self.opts.description += "\nModule author: Nguyen Hoang Thanh <smith.nguyenhoangthanh@gmail.com>"
         self.protocol = "tcp"
-        self.shell_type = 0
+        # self.shell_type = 0
         self.is_interactive = True
 
     def make_shell(self):

@@ -88,12 +88,12 @@ def do_filter_list(import_path, args):
             # user didn't pass value
             if args.interactive is not None and args.interactive != is_interactive:
                 pass
-            elif args.shell_type and SHELL_TYPE_TO_INT[args.shell_type] != shell_type:
-                pass
+            # elif args.shell_type and SHELL_TYPE_TO_INT[args.shell_type] != shell_type:
+            #     pass
             else:
                 help_module_name = color_bright_white(module_name.replace(".", "/"))
                 desc = color_bright_magenta("Interactive") if is_interactive else color_magenta("Non-Interactive")
-                desc += f" {COLORED_SHELL_TYPE[shell_type]}"
+                # desc += f" {COLORED_SHELL_TYPE[shell_type]}"
                 descriptions += ((help_module_name, class_name, desc),) if \
                     help_module_name not in [x[0] for x in descriptions] else (("", class_name, desc),)
     return descriptions

@@ -5,7 +5,7 @@ import base64
 class ReadFile(plugin.BaseShell):
     def __init__(self):
         super().__init__()
-        self.shell_type = 3
+        # self.shell_type = 3
         self.is_interactive = False
         self.add_args(
             "--target-file",
@@ -22,7 +22,7 @@ class ReadFile(plugin.BaseShell):
 class Command(plugin.BaseShell):
     def __init__(self):
         super().__init__()
-        self.shell_type = 3
+        # self.shell_type = 3
         self.is_interactive = False
         self.add_args(
             "--command",

@@ -4,7 +4,7 @@ from ogabog.cores import plugin
 class ReadFile(plugin.BaseShell):
     def __init__(self):
         super().__init__()
-        self.shell_type = 3
+        # self.shell_type = 3
         self.is_interactive = False
         self.add_args(
             "--target-file",

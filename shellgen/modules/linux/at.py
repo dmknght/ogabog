@@ -4,7 +4,7 @@ from ogabog.cores import plugin, const
 class Shell(plugin.BaseShell):
     def __init__(self):
         super().__init__()
-        self.shell_type = 0
+        # self.shell_type = 0
         self.is_interactive = True
         self.add_args(
             "--shell",

@@ -12,7 +12,7 @@ class Shell(plugin.BaseShell):
         )
         self.opts.description = "https://gtfobins.github.io/gtfobins/expect/"
         self.opts.description += "\nModule author: Nong Hoang Tu <dmknght@parrotsec.org>"
-        self.shell_type = 0
+        # self.shell_type = 0
         self.is_interactive = True
 
     def make_shell(self):
@@ -22,7 +22,7 @@ class Shell(plugin.BaseShell):
 class ReadFile(plugin.BaseShell):
     def __init__(self):
         super().__init__()
-        self.shell_type = 3
+        # self.shell_type = 3
         self.is_interactive = False
         self.add_args(
             "--target-file",

