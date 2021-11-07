@@ -16,17 +16,13 @@ def get_classes(module_name: str):
         module = importlib.import_module("shellgen.modules." + module_name.replace("/", "."))
         for class_name, obj in module.__dict__.items():
             if isinstance(obj, type):
-                shell_type, is_interactive = 0, False
+                is_interactive = 0, False
                 try:
-                    shell_type = getattr(module, class_name)().shell_type
-                    is_interactive = getattr(module, class_name)().is_interactive
-                except AttributeError:
-                    print(f"  [!] Class {class_name} has no attribute \"shell_type\"")
-                try:
+                    # shell_type = getattr(module, class_name)().shell_type
                     is_interactive = getattr(module, class_name)().is_interactive
                 except AttributeError:
                     print(f"  [!] Class {class_name} has no attribute \"is_interactive\"")
-                yield class_name, shell_type, is_interactive
+                yield class_name, is_interactive
         del module
     except ModuleNotFoundError:
         print(f"(Searcher) Can't import module {module_name}")
@@ -83,7 +79,7 @@ def do_filter_list(import_path, args):
         if args.exec:
             if not module_name.endswith(args.exec):
                 continue
-        for idx, (class_name, shell_type, is_interactive) in enumerate(get_classes(module_name)):
+        for idx, (class_name, is_interactive) in enumerate(get_classes(module_name)):
             # Filter user search by interactive and shell type. Default value of namespace is None if
             # user didn't pass value
             if args.interactive is not None and args.interactive != is_interactive:
